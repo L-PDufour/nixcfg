@@ -26,7 +26,7 @@
   boot.initrd.luks.devices."luks-6401cefc-fbcc-45f1-bab1-89f14a105ba1".device = "/dev/disk/by-uuid/6401cefc-fbcc-45f1-bab1-89f14a105ba1";
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -44,22 +44,59 @@
   services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
-  services.xserver.desktopManager.xfce.enable = true;
-  # hyprland thing
   services.xserver.displayManager.sddm.enable = true;
-  programs.hyprland.enable = true;
-  programs.hyprland.xwayland.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "eu";
-    xkbVariant = "";
-    xkbOptions = "ctrl:swapcaps";  
-};
+  # services.xserver.desktopManager.xfce.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+  services.xserver.windowManager.dwm.enable = true;
+  # services.xserver.windowManager.dwm.package = pkgs.dwm.override {
+  #   patches = [
+  #     (pkgs.fetchpatch {
+  #       url = "https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff";
+  #       sha256 = "14cRWH5tVU3l3EetygD8HrbI+MoRyedUEdqNpg6uer4=";
+  #     })
+  #       (pkgs.fetchpatch {
+  #         url = "https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff";
+  #       sha256 = "wRZP/27V7xYOBnFAGxqeJFXdoDk4K1EQMA3bEoAXr/0=";
+  #       })
+  #       (pkgs.fetchpatch {
+  #         url = "https://dwm.suckless.org/patches/fancybar/dwm-fancybar-20220527-d3f93c7.diff";
+  #       sha256 = "twTkfKjOMGZCQdxHK0vXEcgnEU3CWg/7lrA3EftEAXc=";
+  #       })
+  #     ];
+  #   };
+  
 fonts.packages = with pkgs; [
   fira-code
   fira-code-symbols
 ];
+  nixpkgs.overlays = [
+  (self: super: {
+    dwm = super.dwm.overrideAttrs (oldAttrs: rec {
+      patches = [
+        (super.fetchpatch {
+          url = "https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff";
+          sha256 = "14cRWH5tVU3l3EetygD8HrbI+MoRyedUEdqNpg6uer4=";
+        })
+        (super.fetchpatch {
+          url = "https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff";
+          sha256 = "wRZP/27V7xYOBnFAGxqeJFXdoDk4K1EQMA3bEoAXr/0=";
+        })
+        (super.fetchpatch {
+          url = "https://dwm.suckless.org/patches/fancybar/dwm-fancybar-20220527-d3f93c7.diff";
+          sha256 = "twTkfKjOMGZCQdxHK0vXEcgnEU3CWg/7lrA3EftEAXc=";
+        })
+        (super.fetchpatch {
+          url = "https://dwm.suckless.org/patches/alpha/dwm-alpha-20201019-61bb8b2.diff";
+          sha256 = "IkVGUl0y/DvuY6vquSmqv2d//QSLMJgFUqi5YEiM8cE=";
+        })
+      ];
+      configFile = super.writeText "config.h" (builtins.readFile ./dwm-config.h);
+      postPatch = "${oldAttrs.postPatch}\ncp ${configFile} config.def.h\n";
+    });
+  })];
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -102,6 +139,7 @@ environment.pathsToLink = [ "/share/zsh" ];
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # neovim
+    gnomeExtensions.pop-shell
     lazygit
     ripgrep
     fd
@@ -112,6 +150,17 @@ environment.pathsToLink = [ "/share/zsh" ];
     xsel
     xclip
     starship
+    pavucontrol
+    # window manager stuff
+    alacritty
+    cinnamon.nemo
+    picom
+    dmenu
+    dunst
+    feh
+    i3lock
+    pamixer
+    xss-lock
 #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
