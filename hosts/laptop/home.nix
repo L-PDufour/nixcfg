@@ -18,7 +18,7 @@ inputs.nixvim.homeManagerModules.nixvim
      ./../../home-manager/terminal.nix
      ./../../home-manager/software.nix
      ./../../nvim/default.nix
-     ./../../home-manager/hyprland.nix
+     ./../../home-manager/sway.nix
   ];
 
   nixpkgs = {

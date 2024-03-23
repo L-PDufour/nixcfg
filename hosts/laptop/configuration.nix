@@ -15,6 +15,7 @@
     [ # Include the results of the hardware scan.
       inputs.home-manager.nixosModules.home-manager
       inputs.nixvim.nixosModules.nixvim
+      ./../../home-manager/greetd.nix
       ./hardware-configuration.nix
     ];
 
@@ -41,62 +42,22 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.xfce.enable = true;
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.plasma6.enable = true;
-  services.xserver.displayManager.defaultSession = "plasma";
-  services.xserver.windowManager.dwm.enable = true;
-  # services.xserver.windowManager.dwm.package = pkgs.dwm.override {
-  #   patches = [
-  #     (pkgs.fetchpatch {
-  #       url = "https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff";
-  #       sha256 = "14cRWH5tVU3l3EetygD8HrbI+MoRyedUEdqNpg6uer4=";
-  #     })
-  #       (pkgs.fetchpatch {
-  #         url = "https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff";
-  #       sha256 = "wRZP/27V7xYOBnFAGxqeJFXdoDk4K1EQMA3bEoAXr/0=";
-  #       })
-  #       (pkgs.fetchpatch {
-  #         url = "https://dwm.suckless.org/patches/fancybar/dwm-fancybar-20220527-d3f93c7.diff";
-  #       sha256 = "twTkfKjOMGZCQdxHK0vXEcgnEU3CWg/7lrA3EftEAXc=";
-  #       })
-  #     ];
-  #   };
-  
+  # services.xserver.desktopManager.plasma6.enable = true;
+  # services.xserver.displayManager.defaultSession = "plasma";
+   
+security.polkit.enable = true;
+hardware.opengl.enable = true; 
 fonts.packages = with pkgs; [
   fira-code
   fira-code-symbols
 ];
-  nixpkgs.overlays = [
-  (self: super: {
-    dwm = super.dwm.overrideAttrs (oldAttrs: rec {
-      patches = [
-        (super.fetchpatch {
-          url = "https://dwm.suckless.org/patches/autostart/dwm-autostart-20210120-cb3f58a.diff";
-          sha256 = "14cRWH5tVU3l3EetygD8HrbI+MoRyedUEdqNpg6uer4=";
-        })
-        (super.fetchpatch {
-          url = "https://dwm.suckless.org/patches/pertag/dwm-pertag-20200914-61bb8b2.diff";
-          sha256 = "wRZP/27V7xYOBnFAGxqeJFXdoDk4K1EQMA3bEoAXr/0=";
-        })
-        (super.fetchpatch {
-          url = "https://dwm.suckless.org/patches/fancybar/dwm-fancybar-20220527-d3f93c7.diff";
-          sha256 = "twTkfKjOMGZCQdxHK0vXEcgnEU3CWg/7lrA3EftEAXc=";
-        })
-        (super.fetchpatch {
-          url = "https://dwm.suckless.org/patches/alpha/dwm-alpha-20201019-61bb8b2.diff";
-          sha256 = "IkVGUl0y/DvuY6vquSmqv2d//QSLMJgFUqi5YEiM8cE=";
-        })
-      ];
-      configFile = super.writeText "config.h" (builtins.readFile ./dwm-config.h);
-      postPatch = "${oldAttrs.postPatch}\ncp ${configFile} config.def.h\n";
-    });
-  })];
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -139,7 +100,6 @@ environment.pathsToLink = [ "/share/zsh" ];
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # neovim
-    gnomeExtensions.pop-shell
     lazygit
     ripgrep
     fd
@@ -148,19 +108,13 @@ environment.pathsToLink = [ "/share/zsh" ];
     curl  
     unzip
     xsel
+    mako
+    wl-clipboard
+    shotman
     xclip
     starship
     pavucontrol
     # window manager stuff
-    alacritty
-    cinnamon.nemo
-    picom
-    dmenu
-    dunst
-    feh
-    i3lock
-    pamixer
-    xss-lock
 #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
