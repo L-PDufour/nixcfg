@@ -14,7 +14,7 @@
   imports =
     [ # Include the results of the hardware scan.
       inputs.nixvim.nixosModules.nixvim
-      # ./../../home-manager/greetd.nix
+      ./../../home-manager/greetd.nix
       ./hardware-configuration.nix
     ];
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
@@ -54,17 +54,18 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.xfce.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
+  # services.gnome.gnome-keyring.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.plasma6.enable = true;
-  services.xserver.displayManager.defaultSession = "plasma";
+  # services.xserver.desktopManager.plasma6.enable = true;
+  # services.xserver.displayManager.defaultSession = "plasma";
   programs.sway.enable = true;
+  programs.sway.package = null;
    xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -76,6 +77,8 @@ hardware.opengl.enable = true;
 fonts.packages = with pkgs; [
   fira-code
   fira-code-symbols
+  font-awesome
+  nerdfonts
 ];
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -120,6 +123,9 @@ fonts.packages = with pkgs; [
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+programs.waybar.enable = true;
+
+
 environment.pathsToLink = [ "/share/zsh" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -135,6 +141,10 @@ environment.pathsToLink = [ "/share/zsh" ];
     xsel
     mako
     wl-clipboard
+    meson
+    wayland-protocols
+    wayland-utils
+    wlroots
     shotman
     xclip
     starship

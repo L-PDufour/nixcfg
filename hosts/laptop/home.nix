@@ -19,6 +19,7 @@ inputs.nixvim.homeManagerModules.nixvim
      ./../../home-manager/software.nix
      ./../../nvim/default.nix
      ./../../home-manager/sway.nix
+     # ./../../home-manager/greetd.nix
   ];
 
   nixpkgs = {
@@ -42,7 +43,6 @@ inputs.nixvim.homeManagerModules.nixvim
       allowUnfreePredicate = _: true;
     };
   };
-  wayland.windowManager.hyprland.enable = true;
   # TODO: Set your username
   home = {
     username = "laptop";
