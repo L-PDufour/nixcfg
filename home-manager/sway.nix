@@ -17,4 +17,5 @@ wayland.windowManager.sway = {
     bindsym Print+Shift+Control exec shotman -c window
   '';
 };
+}
 

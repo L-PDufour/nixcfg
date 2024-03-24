@@ -13,12 +13,19 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      inputs.home-manager.nixosModules.home-manager
       inputs.nixvim.nixosModules.nixvim
-      ./../../home-manager/greetd.nix
+      # ./../../home-manager/greetd.nix
       ./hardware-configuration.nix
     ];
-
+  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+    nix.nixPath = ["/etc/nix/path"];
+  environment.etc =
+    lib.mapAttrs'
+    (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    })
+    config.nix.registry;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -27,7 +34,12 @@
   boot.initrd.luks.devices."luks-6401cefc-fbcc-45f1-bab1-89f14a105ba1".device = "/dev/disk/by-uuid/6401cefc-fbcc-45f1-bab1-89f14a105ba1";
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    # Enable flakes and new 'nix' command
+    experimental-features = "nix-command flakes";
+    # Deduplicate and optimize nix store
+    auto-optimise-store = true;
+  };
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -42,16 +54,23 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the XFCE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.xfce.enable = true;
-  # services.xserver.displayManager.sddm.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
-  # services.xserver.desktopManager.plasma6.enable = true;
-  # services.xserver.displayManager.defaultSession = "plasma";
-   
+  services.xserver.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+  programs.sway.enable = true;
+   xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # gtk portal needed to make gtk apps happy
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };  
 security.polkit.enable = true;
 hardware.opengl.enable = true; 
 fonts.packages = with pkgs; [
@@ -80,7 +99,13 @@ fonts.packages = with pkgs; [
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
+    };
+  };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.laptop = {
     isNormalUser = true;
@@ -126,13 +151,6 @@ environment.pathsToLink = [ "/share/zsh" ];
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-home-manager = {
-    extraSpecialArgs = { inherit inputs ; };
-    users = {
-      # Import your home-manager configuration
-      laptop = import ./home.nix;
-    };
-  };
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
