@@ -20,7 +20,7 @@ programs.zsh = {
   enable = true;
   initExtraBeforeCompInit = "unsetopt beep";
   syntaxHighlighting.enable = true;
-  enableAutosuggestions = true;
+  # enableAutosuggestions = true;
   enableCompletion = true;
   plugins = [
       {

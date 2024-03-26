@@ -14,7 +14,7 @@
   imports =
     [ # Include the results of the hardware scan.
       inputs.nixvim.nixosModules.nixvim
-      ./../../home-manager/greetd.nix
+      # ./../../home-manager/greetd.nix
       ./hardware-configuration.nix
     ];
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
@@ -31,7 +31,35 @@
   boot.loader.efi.canTouchEfiVariables = true;
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  environment.gnome.excludePackages = (with pkgs; [
+gnome-photos
+gnome-tour
+gnome-text-editor
+  ]) ++ (with pkgs.gnome; [
+cheese # webcam tool
+gnome-music
+gnome-terminal
+epiphany # web browser
+geary # email reader
+evince # document viewer
+gnome-characters
+totem # video player
+tali # poker game
+iagno # go game
+hitori # sudoku game
+atomix # puzzle game
+gnome-calculator
+yelp # help viewer
+gnome-maps
+gnome-weather
+gnome-contacts
+simple-scan
+]);
   boot.initrd.luks.devices."luks-6401cefc-fbcc-45f1-bab1-89f14a105ba1".device = "/dev/disk/by-uuid/6401cefc-fbcc-45f1-bab1-89f14a105ba1";
+  # services.blueman.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   nix.settings = {
@@ -56,29 +84,20 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-  # Enable the XFCE Desktop Environment.
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.xfce.enable = true;
-  # services.gnome.gnome-keyring.enable = true;
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  # services.xserver.desktopManager.plasma6.enable = true;
-  # services.xserver.displayManager.defaultSession = "plasma";
-  programs.sway.enable = true;
-  programs.sway.package = null;
-   xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };  
-security.polkit.enable = true;
-hardware.opengl.enable = true; 
+  # programs.sway.enable = true;
+  # programs.sway.wrapperFeatures.gtk = true;
+  # programs.sway.package = null;
+#    xdg.portal = {
+#     enable = true;
+#     wlr.enable = true;
+#     # gtk portal needed to make gtk apps happy
+#     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+#   };  
+# security.polkit.enable = true;
+# hardware.opengl.enable = true; 
 fonts.packages = with pkgs; [
   fira-code
   fira-code-symbols
-  font-awesome
-  nerdfonts
 ];
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -102,18 +121,11 @@ fonts.packages = with pkgs; [
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  systemd.user.services.kanshi = {
-    description = "kanshi daemon";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
-    };
-  };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.laptop = {
     isNormalUser = true;
     description = "laptop";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = with pkgs; [
       firefox
     #  thunderbird
@@ -123,35 +135,22 @@ fonts.packages = with pkgs; [
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-programs.waybar.enable = true;
-
+# programs.waybar.enable = true;
 
 environment.pathsToLink = [ "/share/zsh" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # neovim
     lazygit
+    gnomeExtensions.pop-shell
     ripgrep
     fd
     git
     wget
     curl  
     unzip
-    xsel
-    mako
-    wl-clipboard
-    meson
-    wayland-protocols
-    wayland-utils
-    wlroots
-    shotman
-    xclip
     starship
     pavucontrol
-    # window manager stuff
-#  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
