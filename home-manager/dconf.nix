@@ -8,7 +8,14 @@ with lib.hm.gvariant;
       sources = [ (mkTuple [ "xkb" "eu" ])  ];
       xkb-options = [ "terminate:ctrl_alt_bksp" "ctrl:nocaps" "ctrl:swapcaps"];
   };
+
+  "org/gnome/desktop/wm/preferences" = {
+  num-workspaces=10;
+  };
   "org/gnome/desktop/wm/keybindings" = {
+  close = ["<Ctrl><Super>q"];
+  minimize = [];
+
   move-to-workspace-1 = ["<Ctrl><Super>1"]; 
   move-to-workspace-2 = ["<Ctrl><Super>2"];
   move-to-workspace-3 = ["<Ctrl><Super>3"];
@@ -18,7 +25,7 @@ with lib.hm.gvariant;
   move-to-workspace-7 = ["<Ctrl><Super>7"];
   move-to-workspace-8 = ["<Ctrl><Super>8"];
   move-to-workspace-9 = ["<Ctrl><Super>9"];
-  move-to-workspace-10 = ["<Ctrl><Super>10"];
+  move-to-workspace-10 = ["<Ctrl><Super>0"];
 
   switch-to-workspace-1 = ["<Super>1"]; 
   switch-to-workspace-2 = ["<Super>2"];
@@ -29,7 +36,7 @@ with lib.hm.gvariant;
   switch-to-workspace-7 = ["<Super>7"];
   switch-to-workspace-8 = ["<Super>8"];
   switch-to-workspace-9 = ["<Super>9"];
-  switch-to-workspace-10 = ["<Super>10"];
+  switch-to-workspace-10 = ["<Super>0"];
   };
   "org/gnome/shell/keybindings" = {
   switch-to-application-1 = []; 
