@@ -32,6 +32,7 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   services.xserver.enable = true;
+  services.xserver.xkb.layout = "eu";
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   environment.gnome.excludePackages = (with pkgs; [

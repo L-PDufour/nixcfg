@@ -17,6 +17,7 @@ inputs.nixvim.homeManagerModules.nixvim
      ./../../home-manager/wezterm.nix
      ./../../home-manager/terminal.nix
      ./../../home-manager/software.nix
+     ./../../home-manager/dconf.nix
      ./../../nvim/default.nix
   ];
 
