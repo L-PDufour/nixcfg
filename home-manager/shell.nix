@@ -22,6 +22,14 @@
     enableCompletion = true;
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";
+    shellAliases = {
+      ll = "ls -l";
+      upnix = "sudo nixos-rebuild switch";
+      uphm = "home-manager switch";
+      tma = "tmux attach";
+      tmd = "tmux detach";
+
+    };
     plugins = [
       {
         name = "fzf-tab";

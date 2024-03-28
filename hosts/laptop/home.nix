@@ -15,6 +15,7 @@
     ./../../home-manager/git.nix
     ./../../home-manager/wezterm.nix
     ./../../home-manager/tmux.nix
+    ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
     ./../../home-manager/software.nix
     ./../../home-manager/dconf.nix
