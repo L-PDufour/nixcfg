@@ -1,24 +1,24 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
+{ inputs
+, lib
+, config
+, pkgs
+, ...
 }: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeManagerModules.nixvim
     # You can also split up your configuration and import pieces of it here:
-     ./../../home-manager/git.nix
-     ./../../home-manager/wezterm.nix
-     ./../../home-manager/terminal.nix
-     ./../../home-manager/software.nix
-     ./../../home-manager/dconf.nix
-     ./../../nvim/default.nix
+    ./../../home-manager/git.nix
+    ./../../home-manager/wezterm.nix
+    ./../../home-manager/tmux.nix
+    ./../../home-manager/shell.nix
+    ./../../home-manager/software.nix
+    ./../../home-manager/dconf.nix
+    ./../../nvim/default.nix
   ];
 
   nixpkgs = {

@@ -29,8 +29,11 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
   programs.zsh.enable = true;
+  programs.zsh.autosuggestions.enable = true;
   users.defaultUserShell = pkgs.zsh;
+
   boot.initrd.luks.devices."luks-6401cefc-fbcc-45f1-bab1-89f14a105ba1".device = "/dev/disk/by-uuid/6401cefc-fbcc-45f1-bab1-89f14a105ba1";
   # services.blueman.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
@@ -86,9 +89,9 @@
     isNormalUser = true;
     description = "laptop";
     extraGroups = [ "networkmanager" "wheel" "video" ];
+    openssh.authorizedKeys.keys = [""];
     packages = with pkgs; [
       firefox
-      #  thunderbird
     ];
   };
 
@@ -98,6 +101,7 @@
   environment.pathsToLink = [ "/share/zsh" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  environment.shells = with pkgs; [ zsh ];
   environment.systemPackages = with pkgs; [
     lazygit
     ripgrep
@@ -119,7 +123,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
