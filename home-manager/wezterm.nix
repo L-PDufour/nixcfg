@@ -19,7 +19,7 @@
     end
 
     -- This is where you actually apply your config choices
-    config.default_prog = { '/run/current-system/sw/bin/bash' }
+    config.default_prog = { '/run/current-system/sw/bin/zsh' }
     config.colors = {}
     config.colors.background = "#111111"
     config.font_size = 16.0

@@ -17,9 +17,10 @@
     ./../../home-manager/tmux.nix
     ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
+    ./../../home-manager/nixvim/default.nix
     ./../../home-manager/software.nix
     ./../../home-manager/dconf.nix
-    ./../../nvim/default.nix
+    # ./../../nvim/default.nix
   ];
 
   nixpkgs = {
