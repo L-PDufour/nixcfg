@@ -29,12 +29,12 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices."luks-16bfceab-3f4f-4292-883d-4882124c1fca".device = "/dev/disk/by-uuid/16bfceab-3f4f-4292-883d-4882124c1fca";
 
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
-  boot.initrd.luks.devices."luks-6401cefc-fbcc-45f1-bab1-89f14a105ba1".device = "/dev/disk/by-uuid/6401cefc-fbcc-45f1-bab1-89f14a105ba1";
   # services.blueman.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -108,9 +108,13 @@
     git
     wget
     curl
-    unzip
+    neovim
+  syncthing
+  keepassxc
+	unzip
     starship
-  ];
+	firefox
+];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -42,9 +42,6 @@ config.enable_tab_bar = false
 config.enable_wayland = true
 config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
-config.set_environment_variables = {
-  TERMINFO_DIRS = "/home/laptop/.nix-profile/share/terminfo"
-}
 config.term = "wezterm"
 config.window_padding = {
     left = 0,
