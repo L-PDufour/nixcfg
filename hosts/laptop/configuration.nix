@@ -91,7 +91,6 @@
     extraGroups = [ "networkmanager" "wheel" "video" ];
     openssh.authorizedKeys.keys = [""];
     packages = with pkgs; [
-      firefox
     ];
   };
 

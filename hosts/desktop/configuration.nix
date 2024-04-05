@@ -2,17 +2,31 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.nixvim.nixosModules.nixvim
+      ./../../services/gnome.nix
     ];
-
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc =
+    lib.mapAttrs'
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  programs.zsh.enable = true;
+  programs.zsh.autosuggestions.enable = true;
+  users.defaultUserShell = pkgs.zsh;
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.
@@ -21,7 +35,12 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  nix.settings = {
+    # Enable flakes and new 'nix' command
+    experimental-features = "nix-command flakes";
+    # Deduplicate and optimize nix store
+    auto-optimise-store = true;
+  };
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -30,19 +49,16 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
-
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+  ];
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -73,11 +89,8 @@
     description = "desktop";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
-	neovim
-	git  
   #
- 
+
 # thunderbird
     ];
   };
@@ -85,11 +98,22 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.pathsToLink = [ "/share/zsh" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+  environment.shells = with pkgs; [ zsh ];
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    lazygit
+    ripgrep
+    fd
+    git
+    wget
+    curl
+    unzip
+    starship
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -103,7 +127,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

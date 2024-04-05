@@ -29,7 +29,14 @@
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [
-          ./hosts/laptop/configuration.nix          
+          ./hosts/laptop/configuration.nix
+    ];
+      };
+      desktop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        # > Our main nixos configuration file <
+        modules = [
+          ./hosts/desktop/configuration.nix
     ];
       };
     };
@@ -39,6 +46,13 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
            modules = [./hosts/laptop/home.nix];
+
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          };
+      "desktop@nixos" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs;};
+           modules = [./hosts/desktop/home.nix];
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
           };
