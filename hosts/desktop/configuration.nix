@@ -9,7 +9,9 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixvim.nixosModules.nixvim
-      ./../../services/gnome.nix
+      ./../../modules/gnome.nix
+      ./../../modules/packages.nix
+
     ];
   nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
   nix.nixPath = [ "/etc/nix/path" ];
@@ -26,6 +28,7 @@
 
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
+  programs.steam.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
