@@ -1,7 +1,24 @@
 { pkgs, ... }:
 {
-  # GNOME-related configuration
+   networking.networkmanager.enable = true;
+  time.timeZone = "America/Toronto";
+  i18n.defaultLocale = "en_CA.UTF-8";
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+  ];
   services.xserver.enable = true;
+  services.printing.enable = true;
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
   services.xserver.xkb.layout = "eu";
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;

@@ -2,16 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixvim.nixosModules.nixvim
-      ./../../modules/gnome.nix
+      ./../../modules/desktop.nix
       ./../../modules/packages.nix
-
+      ./../../modules/shell.nix
     ];
   nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
   nix.nixPath = [ "/etc/nix/path" ];
@@ -26,10 +26,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
   programs.steam.enable = true;
-  users.defaultUserShell = pkgs.zsh;
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.
@@ -44,79 +41,16 @@
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
   };
-  # Enable networking
-  networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "America/Toronto";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-  ];
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-
-  # Configure keymap in X11
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.desktop = {
     isNormalUser = true;
     description = "desktop";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    ];
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.pathsToLink = [ "/share/zsh" ];
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
-  environment.shells = with pkgs; [ zsh ];
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-    lazygit
-    ripgrep
-    fd
-    git
-    wget
-    curl
-    syncthing
-    keepassxc
-    unzip
-    starship
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

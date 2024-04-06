@@ -5,7 +5,6 @@
 { inputs
 , lib
 , config
-, pkgs
 , ...
 }:
 
@@ -14,8 +13,10 @@
     [
       # Include the results of the hardware scan.
       inputs.nixvim.nixosModules.nixvim
-      ./../../services/gnome.nix
+      ./../../modules/desktop.nix
       ./hardware-configuration.nix
+      ./../../modules/packages.nix
+      ./../../modules/shell.nix
     ];
   nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
   nix.nixPath = [ "/etc/nix/path" ];
@@ -31,90 +32,26 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices."luks-16bfceab-3f4f-4292-883d-4882124c1fca".device = "/dev/disk/by-uuid/16bfceab-3f4f-4292-883d-4882124c1fca";
 
-  programs.zsh.enable = true;
-  programs.zsh.autosuggestions.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-
   # services.blueman.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   nix.settings = {
-    # Enable flakes and new 'nix' command
     experimental-features = "nix-command flakes";
-    # Deduplicate and optimize nix store
     auto-optimise-store = true;
   };
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Toronto";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_CA.UTF-8";
-
-
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-  ];
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.laptop = {
     isNormalUser = true;
     description = "laptop";
     extraGroups = [ "networkmanager" "wheel" "video" ];
     openssh.authorizedKeys.keys = [""];
-    packages = with pkgs; [
-    ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  environment.pathsToLink = [ "/share/zsh" ];
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.shells = with pkgs; [ zsh ];
-  environment.systemPackages = with pkgs; [
-    lazygit
-    ripgrep
-    fd
-    git
-    wget
-    curl
-    neovim
-  syncthing
-  keepassxc
-	unzip
-    starship
-	firefox
-];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
