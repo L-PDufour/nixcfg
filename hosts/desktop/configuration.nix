@@ -109,6 +109,8 @@
     git
     wget
     curl
+    syncthing
+    keepassxc
     unzip
     starship
   ];

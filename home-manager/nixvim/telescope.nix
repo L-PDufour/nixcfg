@@ -59,8 +59,16 @@
   };
 programs.nixvim.keymaps = [
       {
-        action = "<cmd>Neotree toggle<CR>";
-        key = "<C-b>";  # this line is changed
+        action = "<cmd>Telescope undo<CR>";
+        key = "<leader>su";  # this line is changed
+        mode = "n";
+        options = {
+          desc = "Toggle Tree View.";
+        };
+      }
+{
+        action = "<cmd>Telescope file_browser<CR>";
+        key = "<leader>se";  # this line is changed
         mode = "n";
         options = {
           desc = "Toggle Tree View.";
