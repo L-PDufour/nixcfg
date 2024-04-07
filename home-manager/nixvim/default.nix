@@ -56,7 +56,7 @@
       smartcase = true; # Override the 'ignorecase' option if the search pattern contains upper
       #   case characters
       scrolloff = 8; # Number of screen lines to show around the cursor
-      cursorline = false; # Highlight the screen line of the cursor
+      cursorline = true; # Highlight the screen line of the cursor
       cursorcolumn = false; # Highlight the screen column of the cursor
       signcolumn = "yes"; # Whether to show the signcolumn
       laststatus = 0; # When to use a status line for the last window
@@ -76,8 +76,17 @@
 
       # Folding
       foldlevel = 99; # Folds with a level higher than this number will be closed
+      # Kickstart setting
+      showmode = false;
+      breakindent = true;
+      timeoutlen = 300;
+      list = true;
+      hlsearch = true;
+
+
     };
     plugins = {
+    which-key.enable = true;
     better-escape.enable = true;
     sleuth.enable = true;
     comment.enable = true;

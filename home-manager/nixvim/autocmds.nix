@@ -1,11 +1,26 @@
 {
+  programs.nixvim.autoGroups = {
+    "YankHighlight" = {clear = true;};
+  };
   programs.nixvim.autoCmd = [
     # Vertically center document when entering insert mode
     {
       event = "InsertEnter";
       command = "norm zz";
     }
-
+    # Yank highlight
+    {
+      event = "TextYankPost";
+      group = "YankHighlight";
+      pattern = "*";
+      callback =  {
+      __raw = ''
+      function()
+      vim.highlight.on_yank()
+  end
+  '';
+    };
+    }
     # Remove trailing whitespace on save
     {
       event = "BufWrite";

@@ -2,9 +2,17 @@
   programs.nixvim.plugins.telescope = {
   extensions.file_browser.enable = true;
   extensions.ui-select.enable = true;
+  extensions.fzf-native.enable = true;
   extensions.undo.enable = true;
     enable = true;
     defaults = {
+      mappings = {
+      i = {
+      "<c-enter>" = {
+      __raw = "to_fuzzy_refine";
+      };
+      };
+    };
     "file_ignore_patterns" = [
       "node_modules"
       ".git"
@@ -51,6 +59,10 @@
         action = "diagnostics";
         desc = "[s]earch [d]iagnotics";
       };
+      "<leader>sD" = {
+        action = "diagnostics, {}";
+        desc = "[s]earch workspace [D]iagnotics";
+      };
       "<leader>sk" = {
         action = "keymaps";
         desc = "[s]earch [k]eymaps";
@@ -59,11 +71,37 @@
   };
 programs.nixvim.keymaps = [
       {
+      action = "<cmd>:lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>";
+      key = "<leader>dw";
+      options = {
+      desc = "[D]ocument [w]orkspace symbols";
+      };
+      }{
+      action = "<cmd>:lua require('telescope.builtin').lsp_document_symbols()<CR>";
+      key = "<leader>ds";
+      options = {
+      desc = "[D]ocument [s]ymbols";
+      };
+      }{
+      action = "<cmd>:lua require('telescope.builtin').lsp_references()<CR>";
+      key = "<leader>dr";
+      options = {
+      desc = "[D]ocument [r]eferences";
+      };
+      }
+      {
+      action = "<cmd>:lua require('telescope.builtin').lsp_definitions()<CR>";
+      key = "<leader>df";
+      options = {
+      desc = "[D]ocument de[f]inition";
+      };
+      }
+      {
         action = "<cmd>Telescope undo<CR>";
         key = "<leader>su";  # this line is changed
         mode = "n";
         options = {
-          desc = "Toggle Tree View.";
+          desc = "[s]earch [u]ndo";
         };
       }
 {
@@ -71,7 +109,7 @@ programs.nixvim.keymaps = [
         key = "<leader>se";  # this line is changed
         mode = "n";
         options = {
-          desc = "Toggle Tree View.";
+          desc = "[s]earch file [e]xplorer";
         };
       }
     ];
