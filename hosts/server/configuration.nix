@@ -2,13 +2,27 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{lib, inputs, config, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.nixvim.nixosModules.nixvim
+      # ./../../modules/desktop.nix
+      ./../../modules/packages.nix
+      ./../../modules/shell.nix
     ];
+
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc =
+    lib.mapAttrs'
+      (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -25,7 +39,14 @@
 
   boot.initrd.luks.devices."luks-548eacfe-ef8c-440c-8823-f905920a116a".keyFile = "/crypto_keyfile.bin";
   boot.initrd.luks.devices."luks-bf8c52ac-5d36-45b3-b5fb-f6a6211efbdd".keyFile = "/crypto_keyfile.bin";
-  
+
+
+
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+    auto-optimise-store = true;
+  };
+
   #Laptop settings
   services.logind.lidSwitchExternalPower = "ignore";
 
@@ -53,17 +74,23 @@ virtualisation.docker.rootless = {
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Configure keymap in X11
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+  ];
+  services.xserver.xkb.layout = "eu";
+
   services.xserver = {
-    layout = "us";
+    layout = "eu";
     xkbVariant = "";
-  };
+    xkbOptions = "ctrl:swapcaps";
+};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.server = {
     isNormalUser = true;
     description = "server";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [];
   };
 
   # Allow unfree packages
@@ -93,7 +120,7 @@ virtualisation.docker.rootless = {
   services.openssh.settings.PasswordAuthentication = false;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 8443 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

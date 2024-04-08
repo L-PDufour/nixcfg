@@ -1,11 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs
-, lib
-, config
-, pkgs
-, ...
-}: {
+{...}: 
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -14,12 +10,8 @@
     ./../../home-manager/git.nix
     ./../../home-manager/wezterm.nix
     ./../../home-manager/tmux.nix
-    ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
     ./../../home-manager/nixvim
-    ./../../home-manager/software.nix
-    ./../../home-manager/dconf.nix
-    # ./../../nvim/default.nix
   ];
 
   nixpkgs = {
@@ -45,8 +37,8 @@
   };
   # TODO: Set your username
   home = {
-    username = "laptop";
-    homeDirectory = "/home/laptop";
+    username = "server";
+    homeDirectory = "/home/server";
   };
 
   # Add stuff for your user as you see fit:
