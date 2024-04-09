@@ -13,13 +13,13 @@
       event = "TextYankPost";
       group = "YankHighlight";
       pattern = "*";
-      callback =  {
-      __raw = ''
-      function()
-      vim.highlight.on_yank()
-  end
-  '';
-    };
+      callback = {
+        __raw = ''
+              function()
+              vim.highlight.on_yank()
+          end
+        '';
+      };
     }
     # Remove trailing whitespace on save
     {

@@ -82,24 +82,22 @@
       timeoutlen = 300;
       list = true;
       hlsearch = true;
-
-
     };
     plugins = {
-    which-key.enable = true;
-    better-escape.enable = true;
-    sleuth.enable = true;
-    comment.enable = true;
-    gitsigns = {
-      enable = true;
-      settings.signs = {
-        add.text = "+";
-        change.text = "~";
-        delete.text = "_";
-        topdelete.text = "‾";
-        changedelete.text = "~";
+      which-key.enable = true;
+      better-escape.enable = true;
+      sleuth.enable = true;
+      comment.enable = true;
+      gitsigns = {
+        enable = true;
+        settings.signs = {
+          add.text = "+";
+          change.text = "~";
+          delete.text = "_";
+          topdelete.text = "‾";
+          changedelete.text = "~";
+        };
       };
-    };
     };
   };
 }

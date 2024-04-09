@@ -1,28 +1,31 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{lib, inputs, config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.nixvim.nixosModules.nixvim
-      # ./../../modules/desktop.nix
-      ./../../modules/packages.nix
-      ./../../modules/shell.nix
-    ];
+  lib,
+  inputs,
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.nixvim.nixosModules.nixvim
+    # ./../../modules/desktop.nix
+    ./../../modules/packages.nix
+    ./../../modules/shell.nix
+  ];
 
-  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = [ "/etc/nix/path" ];
+  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.nixPath = ["/etc/nix/path"];
   environment.etc =
     lib.mapAttrs'
-      (name: value: {
-        name = "nix/path/${name}";
-        value.source = value.flake;
-      })
-      config.nix.registry;
+    (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    })
+    config.nix.registry;
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -35,12 +38,10 @@
     "/crypto_keyfile.bin" = null;
   };
 
-  boot.loader.grub.enableCryptodisk=true;
+  boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices."luks-548eacfe-ef8c-440c-8823-f905920a116a".keyFile = "/crypto_keyfile.bin";
   boot.initrd.luks.devices."luks-bf8c52ac-5d36-45b3-b5fb-f6a6211efbdd".keyFile = "/crypto_keyfile.bin";
-
-
 
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -52,10 +53,10 @@
 
   #Docker
   virtualisation.docker.enable = true;
-virtualisation.docker.rootless = {
-  enable = true;
-  setSocketVariable = true;
-};
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -84,13 +85,13 @@ virtualisation.docker.rootless = {
     layout = "eu";
     xkbVariant = "";
     xkbOptions = "ctrl:swapcaps";
-};
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.server = {
     isNormalUser = true;
     description = "server";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
   };
 
   # Allow unfree packages
@@ -99,10 +100,10 @@ virtualisation.docker.rootless = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-	neovim
-	git
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    neovim
+    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -120,7 +121,7 @@ virtualisation.docker.rootless = {
   services.openssh.settings.PasswordAuthentication = false;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 8443 ];
+  networking.firewall.allowedTCPPorts = [8443];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -132,5 +133,4 @@ virtualisation.docker.rootless = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }

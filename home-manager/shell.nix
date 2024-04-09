@@ -1,16 +1,15 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = with pkgs; [
     fzf
     zsh-fzf-history-search
     zsh-fzf-tab
   ];
-  # programs.neovim.enable = true;
-  # programs.neovim.plugins = [
-  # (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [ p.c p.java ]))
-  # ];
   programs.starship.enable = true;
-  programs.starship.settings = { };
+  programs.starship.settings = {};
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -28,7 +27,6 @@
       uphm = "home-manager switch";
       tma = "tmux attach";
       tmd = "tmux detach";
-
     };
     plugins = [
       {

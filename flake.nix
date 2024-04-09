@@ -11,7 +11,6 @@
 
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
-
   };
 
   outputs = {
@@ -30,41 +29,40 @@
         # > Our main nixos configuration file <
         modules = [
           ./hosts/laptop/configuration.nix
-    ];
+        ];
       };
       desktop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [
           ./hosts/desktop/configuration.nix
-    ];
+        ];
       };
       server = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
         modules = [
           ./hosts/server/configuration.nix
-    ];
+        ];
       };
-
     };
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       "laptop@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-           modules = [./hosts/laptop/home.nix];
-          };
+        modules = [./hosts/laptop/home.nix];
+      };
       "desktop@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-           modules = [./hosts/desktop/home.nix];
-          };
- "server@nixos" = home-manager.lib.homeManagerConfiguration {
+        modules = [./hosts/desktop/home.nix];
+      };
+      "server@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-           modules = [./hosts/server/home.nix];
-          };
- };
-};
+        modules = [./hosts/server/home.nix];
+      };
+    };
+  };
 }

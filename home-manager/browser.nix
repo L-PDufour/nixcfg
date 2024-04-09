@@ -1,15 +1,14 @@
-{ pkgs, ... }:
 {
   programs.chromium.enable = true;
-   programs.chromium.extensions = [
-          {
-            id = "dbepggeogbaibhgnhhndojpepiihcmeb";
-          }
-          {
-            id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
-          }
-          {
-            id = "oboonakemofpalcgghocfoadofidjkkk";
-          }
-];
+  programs.chromium.extensions = [
+    {
+      id = "dbepggeogbaibhgnhhndojpepiihcmeb";
+    }
+    {
+      id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
+    }
+    {
+      id = "oboonakemofpalcgghocfoadofidjkkk";
+    }
+  ];
 }

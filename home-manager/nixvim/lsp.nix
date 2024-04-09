@@ -1,16 +1,15 @@
 {
   programs.nixvim.plugins = {
-          conform-nvim.enable = true;
-          conform-nvim.formatOnSave = {
+    conform-nvim.enable = true;
+    conform-nvim.formatOnSave = {
       lspFallback = true;
       timeoutMs = 500;
     };
     conform-nvim.notifyOnError = true;
-       conform-nvim.formattersByFt =
-    {
-      lua = [ "stylua" ];
+    conform-nvim.formattersByFt = {
+      lua = ["stylua"];
       # Conform will run multiple formatters sequentially
-      python = [ "isort" "black" ];
+      python = ["isort" "black"];
       # Use a sub-list to run only the first available formatter
       html = [["prettierd" "prettier"]];
       css = [["prettierd" "prettier"]];
@@ -20,15 +19,14 @@
       typescriptreact = [["prettierd" "prettier"]];
       nix = ["alejandra"];
       # Use the "*" filetype to run formatters on all filetypes.
-      "*" = [ "codespell" ];
+      "*" = ["codespell"];
       # Use the "_" filetype to run formatters on filetypes that don't
       # have other formatters configured.
-      "_" = [ "trim_whitespace" ];
+      "_" = ["trim_whitespace"];
     };
     lsp-format.enable = true;
     lsp = {
-            enable = true;
-
+      enable = true;
       keymaps = {
         silent = true;
         diagnostic = {
