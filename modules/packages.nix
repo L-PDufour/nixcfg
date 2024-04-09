@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     stylua
     isort
@@ -7,6 +6,7 @@
     nodePackages_latest.prettier
     prettierd
     alejandra
+    gnumake
     lazygit
     ripgrep
     fd

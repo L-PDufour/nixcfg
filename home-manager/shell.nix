@@ -16,7 +16,13 @@
   };
   programs.zsh = {
     enable = true;
-    initExtraBeforeCompInit = "unsetopt beep";
+    initExtraBeforeCompInit = "
+export FUNCNEST=100
+bindkey '^l' forward-word
+bindkey '^y' autosuggest-execute
+bindkey -s 'jk' '^['
+unsetopt beep
+    ";
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     history.size = 10000;

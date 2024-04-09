@@ -1,5 +1,6 @@
 {
   programs.nixvim.plugins = {
+    typescript-tools.enable = true;
     conform-nvim.enable = true;
     conform-nvim.formatOnSave = {
       lspFallback = true;
@@ -44,7 +45,7 @@
 
       servers = {
         clangd.enable = true;
-        tsserver.enable = true;
+        # tsserver.enable = true;
         eslint.enable = true;
         gopls.enable = true;
         lua-ls.enable = true;

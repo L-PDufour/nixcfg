@@ -79,6 +79,8 @@
       bind l select-pane -R
       # Tmux bar
 
+      bind Space last-window
+
 
       setw -g mode-keys vi
 

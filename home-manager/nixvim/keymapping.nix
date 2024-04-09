@@ -32,7 +32,6 @@
           "<C-x>" = ":close<CR>";
 
           # save by Space+s or Ctrl+s
-          "<leader>s" = ":w<CR>";
           "<C-s>" = ":w<CR>";
 
           # navigate to left/right window

@@ -3,6 +3,7 @@
     inputs.nixvim.homeManagerModules.nixvim
     ./autocmds.nix
     ./lsp.nix
+    ./mini.nix
     ./completion.nix
     ./keymapping.nix
     ./telescope.nix

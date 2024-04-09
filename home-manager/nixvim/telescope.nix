@@ -36,37 +36,33 @@
         action = "buffers";
         options.desc = "[ ] Find existing buffers";
       };
-      "<leader>/" = {
-        action = "current_buffer_fuzzy_find";
-        options.desc = "[/] Fuzzily search in current buffer]";
-      };
       "<leader>sf" = {
         action = "find_files";
-        options.desc = "[s]earch [f]iles";
+        options.desc = "[f]iles";
       };
       "<leader>sh" = {
         action = "help_tags";
-        options.desc = "[s]earch [h]elp";
+        options.desc = "[h]elp";
       };
       "<leader>sw" = {
         action = "grep_string";
-        options.desc = "[s]earch current [w]ord";
+        options.desc = "[w]ord";
       };
       "<leader>sg" = {
         action = "live_grep";
-        options.desc = "[s]earch by [g]rep";
+        options.desc = "[g]rep";
       };
       "<leader>sd" = {
         action = "diagnostics";
-        options.desc = "[s]earch [d]iagnotics";
+        options.desc = "[d]iagnotics";
       };
       "<leader>sD" = {
         action = "diagnostics, {}";
-        options.desc = "[s]earch workspace [D]iagnotics";
+        options.desc = "[D]iagnotics";
       };
       "<leader>sk" = {
         action = "keymaps";
-        options.desc = "[s]earch [k]eymaps";
+        options.desc = "[k]eymaps";
       };
     };
   };
@@ -75,28 +71,33 @@
       action = "<cmd>:lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>";
       key = "<leader>dw";
       options = {
-        desc = "[D]ocument [w]orkspace symbols";
+        desc = "[w]orkspace symbols";
       };
+    }
+    {
+      action = "<cmd>:lua require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({winblend = 10,previewer = false}))<CR>";
+      key = "<leader>/";
+      options = {desc = "[/] current buffer fuzzy find";};
     }
     {
       action = "<cmd>:lua require('telescope.builtin').lsp_document_symbols()<CR>";
       key = "<leader>ds";
       options = {
-        desc = "[D]ocument [s]ymbols";
+        desc = "[s]ymbols";
       };
     }
     {
       action = "<cmd>:lua require('telescope.builtin').lsp_references()<CR>";
       key = "<leader>dr";
       options = {
-        desc = "[D]ocument [r]eferences";
+        desc = "[r]eferences";
       };
     }
     {
       action = "<cmd>:lua require('telescope.builtin').lsp_definitions()<CR>";
       key = "<leader>df";
       options = {
-        desc = "[D]ocument de[f]inition";
+        desc = "de[f]inition";
       };
     }
     {
@@ -104,7 +105,7 @@
       key = "<leader>su"; # this line is changed
       mode = "n";
       options = {
-        desc = "[s]earch [u]ndo";
+        desc = "[u]ndo";
       };
     }
     {
@@ -112,7 +113,23 @@
       key = "<leader>se"; # this line is changed
       mode = "n";
       options = {
-        desc = "[s]earch file [e]xplorer";
+        desc = "file [e]xplorer";
+      };
+    }
+    {
+      action = "which_key_ignore";
+      key = "<leader>d"; # this line is changed
+      mode = "n";
+      options = {
+        desc = "[d]ocument";
+      };
+    }
+    {
+      action = "which_key_ignore";
+      key = "<leader>s"; # this line is changed
+      mode = "n";
+      options = {
+        desc = "[s]earch";
       };
     }
   ];
