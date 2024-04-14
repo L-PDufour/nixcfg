@@ -29,6 +29,7 @@ unsetopt beep
     history.path = "${config.xdg.dataHome}/zsh/history";
     shellAliases = {
       ll = "ls -l";
+      lg = "lazygit";
       upnix = "sudo nixos-rebuild switch";
       uphm = "home-manager switch";
       tma = "tmux attach";

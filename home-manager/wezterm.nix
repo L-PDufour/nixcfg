@@ -33,6 +33,7 @@
     config.default_prog = { '/run/current-system/sw/bin/zsh' }
     config.colors = {}
     config.colors.background = "#111111"
+    config.font = wezterm.font 'Fira Code'
     config.font_size = 16.0
     config.color_scheme = "Tokyo Night"
     config.window_background_opacity = 0.95
