@@ -90,7 +90,7 @@
       set -g status-justify left
       set -g status-left-length 200    # increase length (from 10)
       set -g status-right-length 200    # increase length (from 10)
-      set -g status-position top       # macOS / darwin style
+      # set -g status-position top       # macOS / darwin style
       set -g status-style 'bg=#1e1e2e' # transparent
       set -g window-status-current-format '#[fg=magenta,bg=#1e1e2e] *#I #W'
       set -g window-status-format '#[fg=gray,bg=#1e1e2e] #I #W'
