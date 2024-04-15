@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  programs.nix-ld.enable = true;
   environment.systemPackages = with pkgs; [
     stylua
     isort
@@ -17,5 +18,7 @@
     keepassxc
     unzip
     starship
+    vscode
+    vscode.fhs
   ];
 }

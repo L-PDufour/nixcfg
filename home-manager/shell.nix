@@ -8,6 +8,10 @@
     zsh-fzf-history-search
     zsh-fzf-tab
   ];
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.fhs;
+  };
   programs.starship.enable = true;
   programs.starship.settings = {};
   programs.fzf = {
