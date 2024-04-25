@@ -20,5 +20,6 @@
     starship
     vscode
     vscode.fhs
+    go
   ];
 }
