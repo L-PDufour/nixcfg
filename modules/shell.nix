@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  services.udev.enable = true;
   programs.zsh.enable = true;
   programs.zsh.autosuggestions.enable = true;
   users.defaultUserShell = pkgs.zsh;

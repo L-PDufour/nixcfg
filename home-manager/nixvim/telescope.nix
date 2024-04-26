@@ -109,7 +109,7 @@
       };
     }
     {
-      action = "<cmd>Telescope file_browser<CR>";
+      action = "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>";
       key = "<leader>se"; # this line is changed
       mode = "n";
       options = {
