@@ -5,6 +5,7 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -29,6 +30,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+
+  programs.gamemode.enable = true;
+  environment.systemPackages = with pkgs; [
+    protonup
+  ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+  };
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.
