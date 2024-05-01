@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
     ./autocmds.nix
@@ -84,11 +88,13 @@
       list = true;
       hlsearch = true;
     };
+    extraPlugins = [pkgs.vimPlugins.vim-dadbod pkgs.vimPlugins.vim-dadbod-ui pkgs.vimPlugins.vim-dadbod-completion];
     plugins = {
       which-key.enable = true;
       better-escape.enable = true;
       sleuth.enable = true;
       comment.enable = true;
+      floaterm.enable = true;
       gitsigns = {
         enable = true;
         settings.signs = {
