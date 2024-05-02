@@ -52,7 +52,10 @@
     -- Merge the cursor configuration into the main configuration
     config.xcursor_theme = xcursor_theme
     config.xcursor_size = xcursor_size
-
+    config.ssh_domains = wezterm.default_ssh_domains()
+    for _, dom in ipairs(config.ssh_domains) do
+      dom.assume_shell = 'Posix'
+    end
     -- Return the merged configuration
     return config
   '';
