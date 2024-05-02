@@ -6,30 +6,7 @@
   programs.wezterm.enableZshIntegration = true;
   xdg.configFile."wezterm/wezterm.lua".text = ''
         local wezterm = require 'wezterm'
-        local mux = wezterm.mux
-        function is_default_startup(cmd)
-        if not cmd then
-        -- we were started with `wezterm` or `wezterm start` with
-        -- no other arguments
-        return true
-        end
-        if cmd.domain == "DefaultDomain" and not cmd.args then
-        -- Launched via `wezterm start --cwd something`
-        return true
-        end
-        -- we were launched some other way
-        return false
-        end
 
-        wezterm.on('gui-startup', function(cmd)
-        if is_default_startup(cmd) then
-        -- for the default startup case, we want to switch to the unix domain instead
-        local unix = mux.get_domain("unix")
-        mux.set_default_domain(unix)
-        -- ensure that it is attached
-        unix:attach()
-        end
-        end)
 
         local xcursor_size = nil
         local xcursor_theme = nil
@@ -78,12 +55,14 @@
       },
     }
 
-        -- Merge the cursor configuration into the main configuration
-        config.xcursor_theme = xcursor_theme
-        config.xcursor_size = xcursor_size
-
-
-        -- Return the merged configuration
-        return config
+    -- Merge the cursor configuration into the main configuration
+    config.xcursor_theme = xcursor_theme
+    config.xcursor_size = xcursor_size
+    config.ssh_domains = wezterm.default_ssh_domains()
+    for _, dom in ipairs(config.ssh_domains) do
+      dom.assume_shell = 'Posix'
+    end
+    -- Return the merged configuration
+    return config
   '';
 }
