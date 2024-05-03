@@ -21,5 +21,6 @@
     vscode
     vscode.fhs
     go
+    postgresql
   ];
 }

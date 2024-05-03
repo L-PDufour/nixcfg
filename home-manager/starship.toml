@@ -1,2 +1,5 @@
 format = '$all'
 
+[hostname]
+ssh_only = true
+ssh_symbol = " "

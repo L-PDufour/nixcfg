@@ -53,7 +53,7 @@
     { key = 'n', mods = "ALT", action = wezterm.action.SwitchWorkspaceRelative(1) },
     { key = 'p', mods = "ALT", action = wezterm.action.SwitchWorkspaceRelative(-1) },
     { key = 'N', mods = "LEADER", action = wezterm.action.SwitchToWorkspace },
-    { key = 'g', mods = "LEADER", action = wezterm.action.SpawnCommandInNewTab { domain = 'CurrentPaneDomain', args = { "lazygit"} }},
+    { key = 'g', mods = "LEADER", action = wezterm.action.SpawnCommandInNewTab { domain = 'CurrentPaneDomain', args = { "lazygit -p $(pwd)"} }},
     { key = "-",mods   = "LEADER", action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' }},
     { key = "=", mods = "LEADER", action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }},
     { key = "m", mods = "LEADER", action = wezterm.action.TogglePaneZoomState },
