@@ -17,10 +17,12 @@
   outputs = {
     self,
     nixpkgs,
-    neovim-nightly-overlay,
     home-manager,
     ...
   } @ inputs: let
+    overlays = [
+      inputs.neovim-nightly-overlay.overlay
+    ];
     inherit (self) outputs;
   in {
     # NixOS configuration entrypoint
@@ -53,6 +55,9 @@
       "laptop@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
+        configuration = {pkgs, ...}: {
+          nixpkgs.overlays = overlays;
+        };
         modules = [./hosts/laptop/home.nix];
       };
       "desktop@nixos" = home-manager.lib.homeManagerConfiguration {
