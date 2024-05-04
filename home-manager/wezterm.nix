@@ -9,6 +9,7 @@
     local session = require("session")
     local xcursor_size = nil
     local xcursor_theme = nil
+    local mux = wezterm.mux
 
     local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
     if success then
@@ -53,7 +54,7 @@
     { key = 'n', mods = "ALT", action = wezterm.action.SwitchWorkspaceRelative(1) },
     { key = 'p', mods = "ALT", action = wezterm.action.SwitchWorkspaceRelative(-1) },
     { key = 'N', mods = "LEADER", action = wezterm.action.SwitchToWorkspace },
-    { key = 'g', mods = "LEADER", action = wezterm.action.SpawnCommandInNewTab { domain = 'CurrentPaneDomain', args = { "lazygit -p $(pwd)"} }},
+    { key = 'g', mods = "LEADER", action = wezterm.action.SpawnCommandInNewTab { args = {"lazygit"}}},
     { key = "-",mods   = "LEADER", action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' }},
     { key = "=", mods = "LEADER", action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }},
     { key = "m", mods = "LEADER", action = wezterm.action.TogglePaneZoomState },
