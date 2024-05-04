@@ -9,6 +9,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
   };
@@ -16,6 +17,7 @@
   outputs = {
     self,
     nixpkgs,
+    neovim-nightly-overlay,
     home-manager,
     ...
   } @ inputs: let
