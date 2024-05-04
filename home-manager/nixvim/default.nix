@@ -15,11 +15,6 @@
     ./lualine.nix
   ];
 
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz";
-    }))
-  ];
   home.shellAliases.v = "nvim";
 
   programs.nixvim = {
@@ -37,13 +32,21 @@
       loaded_python_provider = 0; # Python 2
     };
 
-    clipboard = {
-      # Use system clipboard
-      register = "unnamedplus";
-
-      providers.wl-copy.enable = true;
-    };
-
+    clipboard.register = "";
+    clipboard.providers.wl-copy.enable = true;
+    # extraConfigLua = ''
+    #   vim.g.clipboard = {
+    #      name = 'OSC 52',
+    #      copy = {
+    #        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    #        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    #      },
+    #      paste = {
+    #        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    #        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    #      },
+    #    }
+    # '';
     opts = {
       updatetime = 100; # Faster completion
 
