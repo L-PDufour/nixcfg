@@ -22,5 +22,6 @@
     vscode.fhs
     go
     postgresql
+    wl-clipboard
   ];
 }

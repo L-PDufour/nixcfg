@@ -27,6 +27,7 @@
     enable = true;
     initExtraBeforeCompInit = "
 export FUNCNEST=100
+export PATH=$PATH:$HOME/go/bin
 bindkey '^l' forward-word
 bindkey '^y' autosuggest-execute
 bindkey -s 'jk' '^['

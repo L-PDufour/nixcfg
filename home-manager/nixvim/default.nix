@@ -19,7 +19,7 @@
 
   programs.nixvim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    # package = pkgs.neovim-nightly;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
@@ -34,19 +34,6 @@
 
     clipboard.register = "";
     clipboard.providers.wl-copy.enable = true;
-    # extraConfigLua = ''
-    #   vim.g.clipboard = {
-    #      name = 'OSC 52',
-    #      copy = {
-    #        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-    #        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-    #      },
-    #      paste = {
-    #        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-    #        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-    #      },
-    #    }
-    # '';
     opts = {
       updatetime = 100; # Faster completion
 
@@ -97,12 +84,15 @@
       list = true;
       hlsearch = true;
     };
-    extraPlugins = [pkgs.vimPlugins.vim-dadbod pkgs.vimPlugins.vim-dadbod-ui pkgs.vimPlugins.vim-dadbod-completion];
+    extraPlugins = [pkgs.vimPlugins.vim-dadbod pkgs.vimPlugins.vim-dadbod-ui pkgs.vimPlugins.vim-dadbod-completion pkgs.vimPlugins.vimwiki];
     plugins = {
       which-key.enable = true;
+      nvim-osc52.enable = true;
+      nvim-osc52.keymaps.enable = true;
       better-escape.enable = true;
       sleuth.enable = true;
       comment.enable = true;
+      treesitter-textobjects.enable = true;
       floaterm.enable = true;
       gitsigns = {
         enable = true;

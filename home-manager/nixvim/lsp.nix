@@ -1,6 +1,6 @@
 {
   programs.nixvim.plugins = {
-    typescript-tools.enable = true;
+    # typescript-tools.enable = true;
     conform-nvim.enable = true;
     conform-nvim.formatOnSave = {
       lspFallback = true;
@@ -14,13 +14,12 @@
       # Use a sub-list to run only the first available formatter
       html = [["prettierd" "prettier"]];
       css = [["prettierd" "prettier"]];
-      javascript = [["prettierd" "prettier"]];
-      javascriptreact = [["prettierd" "prettier"]];
-      typescript = [["prettierd" "prettier"]];
-      typescriptreact = [["prettierd" "prettier"]];
+      javascript = [["prettier"]];
+      javascriptreact = [["prettier"]];
+      typescript = [["prettier"]];
+      typescriptreact = [["prettier"]];
       nix = ["alejandra"];
       # Use the "*" filetype to run formatters on all filetypes.
-      "*" = ["codespell"];
       # Use the "_" filetype to run formatters on filetypes that don't
       # have other formatters configured.
       "_" = ["trim_whitespace"];
@@ -45,7 +44,7 @@
 
       servers = {
         clangd.enable = true;
-        # tsserver.enable = true;
+        tsserver.enable = true;
         eslint.enable = true;
         gopls.enable = true;
         lua-ls.enable = true;

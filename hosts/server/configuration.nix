@@ -102,6 +102,7 @@
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
+    ollama
     neovim
     git
   ];
@@ -121,7 +122,7 @@
   services.openssh.settings.PasswordAuthentication = false;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [8443 5555 5432];
+  networking.firewall.allowedTCPPorts = [8080 8443 5555 5432];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
