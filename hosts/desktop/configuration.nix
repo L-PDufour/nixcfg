@@ -34,6 +34,7 @@
 
   programs.gamemode.enable = true;
   environment.systemPackages = with pkgs; [
+    libusb1
     protonup
   ];
 
@@ -52,7 +53,9 @@
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
   };
-
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0d28", MODE="0664", GROUP="plugdev"
+  '';
   users.users.desktop = {
     isNormalUser = true;
     description = "desktop";

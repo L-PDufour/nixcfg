@@ -86,6 +86,7 @@
     };
     extraPlugins = [pkgs.vimPlugins.vim-dadbod pkgs.vimPlugins.vim-dadbod-ui pkgs.vimPlugins.vim-dadbod-completion pkgs.vimPlugins.vimwiki];
     plugins = {
+      zen-mode.enable = true;
       which-key.enable = true;
       nvim-osc52.enable = true;
       nvim-osc52.keymaps.enable = true;
