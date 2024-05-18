@@ -14,6 +14,8 @@
   };
   programs.starship.enable = true;
   programs.starship.settings = {};
+  programs.zoxide.enable = true;
+  programs.zoxide.enableZshIntegration = true;
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -31,6 +33,18 @@ export PATH=$PATH:$HOME/go/bin
 bindkey '^l' forward-word
 bindkey '^y' autosuggest-execute
 bindkey -s 'jk' '^['
+autoload -Uz compinit && compinit
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 unsetopt beep
     ";
     syntaxHighlighting.enable = true;
@@ -44,6 +58,9 @@ unsetopt beep
       uphm = "home-manager switch";
       tma = "tmux attach";
       tmd = "tmux detach";
+      vim = "nvim";
+      c = "clear";
+      ls = "ls --color";
     };
     plugins = [
       {
