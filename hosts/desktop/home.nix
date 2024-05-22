@@ -12,8 +12,10 @@
     ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
     ./../../home-manager/nixvim
+    # ./../../home-manager/neovim.nix
     ./../../home-manager/software.nix
     ./../../home-manager/dconf.nix
+    ./../../home-manager/sway.nix
     # ./../../nvim/default.nix
   ];
 

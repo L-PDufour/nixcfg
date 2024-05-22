@@ -64,9 +64,9 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          # {
-          # nixpkgs.overlays = [neovim-nightly-overlay.overlay];
-          # }
+          {
+            nixpkgs.overlays = [neovim-nightly-overlay.overlay];
+          }
           ./hosts/desktop/home.nix
         ];
       };

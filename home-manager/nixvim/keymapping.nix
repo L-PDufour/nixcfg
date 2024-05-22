@@ -52,8 +52,6 @@
           # M = Alt key
           "<M-k>" = ":move-2<CR>";
           "<M-j>" = ":move+<CR>";
-
-          "<leader>rp" = ":!remi push<CR>";
         };
       visual =
         lib.mapAttrsToList

@@ -117,7 +117,7 @@
       };
     }
     {
-      action = "which_key_ignore";
+      action = "";
       key = "<leader>d"; # this line is changed
       mode = "n";
       options = {
@@ -125,8 +125,16 @@
       };
     }
     {
-      action = "which_key_ignore";
+      action = "";
       key = "<leader>s"; # this line is changed
+      mode = "n";
+      options = {
+        desc = "[s]earch";
+      };
+    }
+    {
+      action = "<cmd>lua vim.lsp.inlay_hint.enable(notvim.lsp.inlay_hint.is_enabled())<CR>";
+      key = "<leader>ih"; # this line is changed
       mode = "n";
       options = {
         desc = "[s]earch";
