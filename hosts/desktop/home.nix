@@ -11,7 +11,8 @@
     ./../../home-manager/tmux.nix
     ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
-    ./../../home-manager/nixvim
+    # ./../../home-manager/nixvim
+    ./../../home-manager/neovim
     # ./../../home-manager/neovim.nix
     ./../../home-manager/software.nix
     ./../../home-manager/dconf.nix

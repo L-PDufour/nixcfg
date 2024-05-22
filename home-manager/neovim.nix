@@ -38,25 +38,14 @@ in {
     vimAlias = true;
     coc.enable = false;
     withNodeJs = true;
-
+    extraLuaConfig = ''
+      ${builtins.readFile ./init.lua}
+    '';
     plugins = [
       treesitterWithGrammars
     ];
   };
 
-  # home.file."./.config/nvim/" = {
-  #   source = ./nvim;
-  #   recursive = true;
-  # };
-  #
-  # home.file."./.config/nvim/lua/kidsan/init.lua".text = ''
-  #   require("kidsan.set")
-  #   require("kidsan.remap")
-  #   vim.opt.runtimepath:append("${treesitter-parsers}")
-  # '';
-  #
-  # Treesitter is configured as a locally developed module in lazy.nvim
-  # we hardcode a symlink here so that we can refer to it in our lazy config
   home.file."./.local/share/nvim/nix/nvim-treesitter/" = {
     recursive = true;
     source = treesitterWithGrammars;
