@@ -33,9 +33,13 @@
         {
           plugin = pkgs.vimPlugins.telescope-nvim;
           config = builtins.readFile ./telescope.lua;
+
           type = "lua";
         }
         pkgs.vimPlugins.telescope-fzf-native-nvim
+        pkgs.vimPlugins.telescope-ui-select-nvim
+        pkgs.vimPlugins.telescope-file-browser-nvim
+
         pkgs.vimPlugins.harpoon
 
         ## cmp
@@ -128,6 +132,9 @@
         }
 
         ## Debugging
+        pkgs.vimPlugins.conform-nvim
+
+        pkgs.vimPlugins.neodev-nvim
         pkgs.vimPlugins.nvim-dap-ui
         pkgs.vimPlugins.nvim-dap-virtual-text
         {
@@ -136,15 +143,28 @@
           type = "lua";
         }
         
+      {
+
+      plugin = pkgs.vimPlugins.which-key-nvim;
+      config = builtins.readFile ./which-key.lua;
+      type = "lua";
+      }
       ];
 
       extraLuaConfig = ''
+        vim.g.mapleader = " "
+        vim.g.maplocalleader = ' '
         ${builtins.readFile ./mappings.lua}
         ${builtins.readFile ./options.lua}
+        ${builtins.readFile ./terminal.lua}
       '';
       enable = true;
       viAlias = true;
       vimAlias = true;
+    extraPackages =  [
+        pkgs.lua-language-server
+        pkgs.gopls
+    ];
     };
   };
 }
