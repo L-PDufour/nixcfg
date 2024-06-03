@@ -1,6 +1,10 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -11,8 +15,8 @@
     ./../../home-manager/tmux.nix
     ./../../home-manager/browser.nix
     ./../../home-manager/shell.nix
-    # ./../../home-manager/nixvim
-    ./../../home-manager/neovim
+    ./../../home-manager/nixvim
+    # ./../../home-manager/neovim
     # ./../../home-manager/neovim.nix
     ./../../home-manager/software.nix
     ./../../home-manager/dconf.nix
@@ -50,6 +54,7 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
+  programs.qutebrowser.enable = true;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

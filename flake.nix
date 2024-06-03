@@ -9,7 +9,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     # TODO: Add any other flake you might need
     hardware.url = "github:nixos/nixos-hardware";
   };
@@ -64,9 +64,9 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          {
-            nixpkgs.overlays = [neovim-nightly-overlay.overlay];
-          }
+          # {
+          # nixpkgs.overlays = [neovim-nightly-overlay.overlay];
+          # }
           ./hosts/desktop/home.nix
         ];
       };

@@ -51,6 +51,7 @@
       simple-scan
     ]);
   environment.systemPackages = with pkgs; [
+    gnome.gnome-tweaks
     gnomeExtensions.pop-shell
   ];
 }

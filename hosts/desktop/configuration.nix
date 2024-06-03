@@ -59,9 +59,18 @@
   users.users.desktop = {
     isNormalUser = true;
     description = "desktop";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
   };
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = ["mydatabase"];
+    authentication = pkgs.lib.mkOverride 10 ''
+            #type database  DBuser  auth-method
+            local all       all     trust
+      host    blogator    postgres    ::1/128    trust
 
+    '';
+  };
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -75,7 +84,12 @@
   # };
 
   # List services that you want to enable:
-
+  #DOCKER
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
