@@ -79,12 +79,10 @@
     fira-code
     fira-code-symbols
   ];
-  services.xserver.xkb.layout = "eu";
 
   services.xserver = {
-    layout = "eu";
-    xkbVariant = "";
-    xkbOptions = "ctrl:swapcaps";
+    xkb.layout = "eu";
+    xkb.options = "ctrl:swapcaps";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -100,11 +98,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
-    ollama
-    neovim
-    git
+    cloudflared
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -120,6 +114,21 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false;
+
+  #cloudflared
+  services.cloudflared = {
+    enable = true;
+    user = "server";
+    tunnels = {
+      "8e5b30fa-03cd-4255-9fec-577230d25ac6" = {
+        credentialsFile = "/home/server/.cloudflared/8e5b30fa-03cd-4255-9fec-577230d25ac6.json";
+        default = "http_status:404";
+        ingress = {
+          "dev.lpdufour.xyz" = "http://localhost:8001";
+        };
+      };
+    };
+  };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [8080 8443 5555 5432];
