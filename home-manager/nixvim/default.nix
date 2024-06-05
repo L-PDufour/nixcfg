@@ -23,7 +23,9 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    colorschemes.tokyonight.enable = true;
+    # colorschemes.tokyonight.enable = true;
+    colorschemes.catppuccin.enable = true;
+    colorschemes.catppuccin.settings = {flavour = "mocha";};
     luaLoader.enable = true;
     globals = {
       # Disable useless providers

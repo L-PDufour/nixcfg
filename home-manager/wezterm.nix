@@ -31,11 +31,11 @@
     -- This is where you actually apply your config choices
     config.default_prog = { '/run/current-system/sw/bin/zsh' }
     config.colors = {}
-    config.colors.background = "#111111"
+    -- config.colors.background = "#111111"
     config.font = wezterm.font 'Fira Code'
     config.font_size = 16.0
-    config.color_scheme = "Tokyo Night"
-    config.window_background_opacity = 0.95
+    config.color_scheme = "Catppuccin Mocha"
+    -- config.window_background_opacity = 0.95
     config.hide_tab_bar_if_only_one_tab = true
     config.enable_wayland = true
     config.enable_scroll_bar = true
