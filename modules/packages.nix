@@ -23,5 +23,9 @@
     go
     postgresql
     wl-clipboard
+    via
+    qmk
+    zed-editor
+    nodePackages.typescript-language-server
   ];
 }

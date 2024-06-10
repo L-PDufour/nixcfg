@@ -30,6 +30,7 @@
     initExtraBeforeCompInit = "
 export FUNCNEST=100
 export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/.config/emacs/bin
 bindkey '^l' forward-word
 bindkey '^y' autosuggest-execute
 bindkey -s 'jk' '^['
