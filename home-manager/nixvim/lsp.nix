@@ -25,6 +25,7 @@
       "_" = ["trim_whitespace"];
     };
     lsp-format.enable = true;
+    lsp-format.lspServersToEnable = "all";
     lsp = {
       enable = true;
       keymaps = {
@@ -48,8 +49,11 @@
         eslint.enable = true;
         gopls.enable = true;
         lua-ls.enable = true;
-        nil_ls.enable = true;
-        texlab.enable = true;
+        nil-ls.enable = true;
+        # texlab.enable = true;
+        templ.enable = true;
+        htmx.enable = true;
+        tailwindcss.enable = true;
       };
     };
   };

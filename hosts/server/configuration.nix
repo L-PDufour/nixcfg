@@ -98,6 +98,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    tailwindcss
     cloudflared
   ];
 
@@ -113,7 +114,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = true;
 
   #cloudflared
   services.cloudflared = {
@@ -121,17 +122,19 @@
     user = "server";
     tunnels = {
       "8e5b30fa-03cd-4255-9fec-577230d25ac6" = {
+        #     originRequest.noTLSVerify = true;
         credentialsFile = "/home/server/.cloudflared/8e5b30fa-03cd-4255-9fec-577230d25ac6.json";
         default = "http_status:404";
-        ingress = {
-          "dev.lpdufour.xyz" = "http://localhost:8001";
-        };
+        #     ingress = {
+        #       "dev.lpdufour.xyz" = "http://localhost:8001";
+        #       "probono.lpdufour.xyz" = "https://192.168.50.173:8443";
+        #     };
       };
     };
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [8080 8443 5555 5432];
+  networking.firewall.allowedTCPPorts = [8080 8443 5555 5432 7331 8001];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
