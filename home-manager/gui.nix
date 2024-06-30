@@ -1,9 +1,9 @@
 {
   imports = [
     ./browser.nix
-    ./dconf.nix
+    # ./dconf.nix
     ./software.nix
-    ./sway.nix
+    # ./sway.nix
     ./software.nix
   ];
 }

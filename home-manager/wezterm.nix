@@ -7,19 +7,19 @@
   xdg.configFile."wezterm/wezterm.lua".text = ''
     local wezterm = require 'wezterm'
     local session = require("session")
-    local xcursor_size = nil
-    local xcursor_theme = nil
+    -- local xcursor_size = nil
+    -- local xcursor_theme = nil
     local mux = wezterm.mux
 
-    local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
-    if success then
-    xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
-    end
+    -- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
+    -- if success then
+    -- xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
+    -- end
 
-    local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
-    if success then
-    xcursor_size = tonumber(stdout)
-    end
+    -- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
+    -- if success then
+    -- xcursor_size = tonumber(stdout)
+    -- end
 
     -- Define your WezTerm configuration
     -- In newer versions of wezterm, use the config_builder which will
@@ -71,8 +71,8 @@
     { key = 'j', mods = "ALT", action = wezterm.action.ActivatePaneDirection 'Down' },
     { key = 'k', mods = "ALT", action = wezterm.action.ActivatePaneDirection   'Up'  },
     }
-    config.xcursor_theme = xcursor_theme
-    config.xcursor_size = xcursor_size
+    -- config.xcursor_theme = xcursor_theme
+    -- config.xcursor_size = xcursor_size
     config.ssh_domains = wezterm.default_ssh_domains()
     for _, dom in ipairs(config.ssh_domains) do
     dom.assume_shell = 'Posix'

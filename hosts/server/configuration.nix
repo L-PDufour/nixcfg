@@ -2,6 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  outputs,
   lib,
   inputs,
   config,
@@ -133,6 +134,14 @@
     };
   };
 
+  home-manager = {
+    extraSpecialArgs = {inherit inputs outputs;};
+    backupFileExtension = "backup"; # Add this line to handle existing files
+    users = {
+      # Import your home-manager configuration
+      "server" = import ./home.nix;
+    };
+  };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [8080 8443 5555 5432 7331 8001];
   # networking.firewall.allowedUDPPorts = [ ... ];

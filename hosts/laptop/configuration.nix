@@ -2,6 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  outputs,
   inputs,
   lib,
   config,
@@ -62,6 +63,14 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  home-manager = {
+    extraSpecialArgs = {inherit inputs outputs;};
+    backupFileExtension = "backup"; # Add this line to handle existing files
+    users = {
+      # Import your home-manager configuration
+      "laptop" = import ./home.nix;
+    };
+  };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
