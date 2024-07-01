@@ -3,14 +3,15 @@
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
   fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
+    fira-code-nerdfont
+    dejavu_fonts
+    noto-fonts-emoji
   ];
   services.printing.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  # programs.sway.enable = true;
+  programs.sway.enable = true;
   # programs.sway.wrapperFeatures.gtk = true;
   security.polkit.enable = true;
   services.pipewire = {
