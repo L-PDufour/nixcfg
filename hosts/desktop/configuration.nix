@@ -48,11 +48,13 @@
       enable = true;
       xkb.layout = "eu";
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
-      displayManager = {
-        lightdm.enable = true;
-      };
+      windowManager.i3.enable = true;
     };
   };
+  services.displayManager.defaultSession = "sway";
+  services.displayManager.sddm.enable = true;
+  services.libinput.enable = true;
+  programs.dconf.enable = true;
 
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
@@ -60,44 +62,42 @@
 
   stylix.enable = true;
   stylix.autoEnable = true;
-  stylix.targets.nixvim.enable = false;
+  # stylix.targets.nixvim.enable = false;
   stylix.homeManagerIntegration.autoImport = true;
   stylix.homeManagerIntegration.followSystem = true;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  stylix.image = pkgs.fetchurl {
-    url = "https://www.pixelstalk.net/wp-content/uploads/2016/05/Epic-Anime-Awesome-Wallpapers.jpg";
-    sha256 = "enQo3wqhgf0FEPHj2coOCvo7DuZv+x5rL/WIo4qPI50=";
+  stylix.image = ./Rainnight.jpg;
+  stylix.polarity = "dark";
+  stylix.fonts = {
+    serif = {
+      package = pkgs.dejavu_fonts;
+      name = "DejaVu Serif";
+    };
+
+    sansSerif = {
+      package = pkgs.dejavu_fonts;
+      name = "DejaVu Sans";
+    };
+
+    monospace = {
+      package = pkgs.fira-code-nerdfont;
+      name = "FiraCode Nerd Font Mono";
+    };
+
+    emoji = {
+      package = pkgs.noto-fonts-emoji;
+      name = "Noto Color Emoji";
+    };
   };
-  # stylix.fonts = {
-  #   serif = {
-  #     package = pkgs.dejavu_fonts;
-  #     name = "DejaVu Serif";
-  #   };
-  #
-  #   sansSerif = {
-  #     package = pkgs.dejavu_fonts;
-  #     name = "DejaVu Sans";
-  #   };
-  #
-  #   monospace = {
-  #     package = pkgs.dejavu_fonts;
-  #     name = "DejaVu Sans Mono";
-  #   };
-  #
-  #   emoji = {
-  #     package = pkgs.noto-fonts-emoji;
-  #     name = "Noto Color Emoji";
-  #   };
-  # };
   stylix.fonts.sizes = {
     applications = 16;
-    terminal = 16;
+    terminal = 12;
     desktop = 16;
     popups = 16;
   };
 
-  # stylix.cursor.package = pkgs.catppuccin-cursors;
-  # stylix.cursor.name = "mochaMauve";
+  stylix.cursor.package = pkgs.catppuccin-cursors;
+  stylix.cursor.name = "mochaMauve";
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.

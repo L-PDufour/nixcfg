@@ -10,6 +10,7 @@
     ./../../home-manager/tui.nix
     ./../../home-manager/nixvim
     ./../../home-manager/xorg.nix
+    ./../../home-manager/sway.nix
     # ./../../home-manager/neovim
     ./../../home-manager/emacs.nix
     # ./../../home-manager/neovim.nix
