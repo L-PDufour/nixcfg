@@ -9,11 +9,9 @@
   ];
   services.printing.enable = true;
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  programs.sway.enable = true;
   # programs.sway.wrapperFeatures.gtk = true;
   security.polkit.enable = true;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;

@@ -8,7 +8,10 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  # Import the statusbar configuration
+  statusbar = import ./../../statusbar.nix {inherit pkgs;};
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -41,17 +44,20 @@
     xorg.libXext
     inputs.dmenu.packages."x86_64-linux".default
     inputs.st.packages."x86_64-linux".default
-    # inputs.dwmblocks.packages."x86_64-linux".default
+    inputs.dwmblocks.packages."x86_64-linux".default
+    inputs.dwm.packages."x86_64-linux".default
+    statusbar.myScript
   ];
   services = {
     xserver = {
       enable = true;
       xkb.layout = "eu";
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
+      windowManager.dwm.enable = true;
+      windowManager.dwm.package = inputs.dwm.packages."x86_64-linux".default;
       windowManager.i3.enable = true;
     };
   };
-  services.displayManager.defaultSession = "sway";
   services.displayManager.sddm.enable = true;
   services.libinput.enable = true;
   programs.dconf.enable = true;
@@ -96,8 +102,8 @@
     popups = 16;
   };
 
-  stylix.cursor.package = pkgs.catppuccin-cursors;
-  stylix.cursor.name = "mochaMauve";
+  # stylix.cursor.package = pkgs.catppuccin-cursors;
+  # stylix.cursor.name = "mochaMauve";
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.

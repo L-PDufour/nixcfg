@@ -10,7 +10,7 @@
     ./../../home-manager/tui.nix
     ./../../home-manager/nixvim
     ./../../home-manager/xorg.nix
-    ./../../home-manager/sway.nix
+    # ./../../home-manager/sway.nix
     # ./../../home-manager/neovim
     ./../../home-manager/emacs.nix
     # ./../../home-manager/neovim.nix
@@ -43,7 +43,7 @@
     username = "desktop";
     homeDirectory = "/home/desktop";
   };
-  # gtk.enable = true;
+  gtk.enable = true;
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];

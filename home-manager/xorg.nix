@@ -21,6 +21,7 @@ in {
     };
   };
 
+  services.dunst.enable = true;
   programs.i3status-rust = {
     enable = true;
     bars = {

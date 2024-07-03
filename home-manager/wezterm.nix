@@ -7,8 +7,8 @@
   xdg.configFile."wezterm/wezterm.lua".text = ''
     local wezterm = require 'wezterm'
     local session = require("session")
-    -- local xcursor_size = nil
-    -- local xcursor_theme = nil
+    local xcursor_size = nil
+    local xcursor_theme = nil
     local mux = wezterm.mux
 
     -- local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
