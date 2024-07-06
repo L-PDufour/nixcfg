@@ -38,6 +38,21 @@
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
+  boot.kernelParams = ["ip=dhcp"];
+  boot.initrd = {
+    availableKernelModules = ["r8169"];
+    systemd.users.root.shell = "/bin/cryptsetup-askpass";
+    network = {
+      enable = true;
+      ssh = {
+        enable = true;
+        port = 22;
+        authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFzb3+ZpJNa3DdYu2ubeMUifNIoO40WQ/Y2Niw0/UeP desktop@nixos"];
+        hostKeys = ["/etc/secrets/initrd/ssh_host_rsa_key"];
+        authorizedKeysFiles = ["/etc/secrets/initrd/authorized_keys"];
+      };
+    };
+  };
 
   boot.loader.grub.enableCryptodisk = true;
 

@@ -47,6 +47,11 @@ in {
     inputs.dwmblocks.packages."x86_64-linux".default
     inputs.dwm.packages."x86_64-linux".default
     statusbar.myScript
+    #dwmblocks deps
+    bc
+    pulsemixer
+    yad
+    xdotool
   ];
   services = {
     xserver = {
@@ -55,13 +60,21 @@ in {
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
       windowManager.dwm.enable = true;
       windowManager.dwm.package = inputs.dwm.packages."x86_64-linux".default;
-      windowManager.i3.enable = true;
+      displayManager.lightdm.enable = true;
+      displayManager.sessionCommands = ''
+        dwmblocks &
+      '';
     };
   };
-  services.displayManager.sddm.enable = true;
   services.libinput.enable = true;
-  programs.dconf.enable = true;
-
+  programs = {
+    mtr.enable = true;
+    dconf.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+  };
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
   };
