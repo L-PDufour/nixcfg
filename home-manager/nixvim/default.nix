@@ -18,7 +18,7 @@
   home.shellAliases.v = "nvim";
 
   programs.nixvim = {
-    enable = true;
+    enable = false;
     # package = pkgs.neovim-nightly;
     defaultEditor = true;
     viAlias = true;

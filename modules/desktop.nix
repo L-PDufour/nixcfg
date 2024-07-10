@@ -8,7 +8,6 @@
     noto-fonts-emoji
   ];
   services.printing.enable = true;
-  sound.enable = true;
   # programs.sway.wrapperFeatures.gtk = true;
   security.polkit.enable = true;
   security.rtkit.enable = true;

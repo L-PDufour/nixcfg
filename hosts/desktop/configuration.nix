@@ -8,13 +8,12 @@
   lib,
   pkgs,
   ...
-}: let
-  # Import the statusbar configuration
-  statusbar = import ./../../statusbar.nix {inherit pkgs;};
-in {
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # inputs.catppuccin.nixosModules.catppuccin
+    # inputs.catppuccin.homeManagerModules.catppuccin
     inputs.nixvim.nixosModules.nixvim
     ./../../modules/desktop.nix
     ./../../modules/packages.nix
@@ -35,37 +34,27 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
 
-  programs.gamemode.enable = true;
   environment.systemPackages = with pkgs; [
     libusb1
-    protonup
     xorg.libXext
-    inputs.dmenu.packages."x86_64-linux".default
-    inputs.st.packages."x86_64-linux".default
-    inputs.dwmblocks.packages."x86_64-linux".default
-    inputs.dwm.packages."x86_64-linux".default
-    statusbar.myScript
-    #dwmblocks deps
-    bc
-    pulsemixer
-    yad
-    xdotool
   ];
   services = {
+    picom.enable = true;
     xserver = {
       enable = true;
       xkb.layout = "eu";
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
-      windowManager.dwm.enable = true;
-      windowManager.dwm.package = inputs.dwm.packages."x86_64-linux".default;
+      # windowManager.dwm.enable = true;
+      # windowManager.dwm.package = inputs.dwm.packages."x86_64-linux".default;
       displayManager.lightdm.enable = true;
-      displayManager.sessionCommands = ''
-        dwmblocks &
-      '';
+      desktopManager.xterm.enable = false;
+      windowManager.i3 = {
+        enable = true;
+      };
     };
   };
+
   services.libinput.enable = true;
   programs = {
     mtr.enable = true;
@@ -100,7 +89,7 @@ in {
 
     monospace = {
       package = pkgs.fira-code-nerdfont;
-      name = "FiraCode Nerd Font Mono";
+      name = "FiraCode Nerd Font Mono Bold";
     };
 
     emoji = {
@@ -110,11 +99,10 @@ in {
   };
   stylix.fonts.sizes = {
     applications = 16;
-    terminal = 12;
+    terminal = 16;
     desktop = 16;
     popups = 16;
   };
-
   # stylix.cursor.package = pkgs.catppuccin-cursors;
   # stylix.cursor.name = "mochaMauve";
 
@@ -168,11 +156,12 @@ in {
   };
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  programs.zsh.enable = true;
+
   home-manager = {
     extraSpecialArgs = {inherit inputs outputs;};
     backupFileExtension = "backup"; # Add this line to handle existing files
     users = {
-      # Import your home-manager configuration
       "desktop" = import ./home.nix;
     };
   };

@@ -22,10 +22,13 @@
     vscode.fhs
     go
     postgresql
-    wl-clipboard
     via
     qmk
     zed-editor
     nodePackages.typescript-language-server
+    rofi-screenshot
+    xclip
+    xsel
+    flameshot
   ];
 }
