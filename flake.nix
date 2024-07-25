@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixvim.url = "github:nix-community/nixvim";
+    # nixvim.url = "github:nix-community/nixvim";
 
     user-nvim.url = "github:L-PDufour/user.nvim?ref=nix";
     home-manager.url = "github:nix-community/home-manager";
@@ -25,6 +25,7 @@
     home-manager,
     lix-module,
     stylix,
+    user-nvim,
     ...
   } @ inputs: let
     inherit (self) outputs;

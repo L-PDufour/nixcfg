@@ -5,7 +5,11 @@
   lib,
   config,
   ...
-}: {
+}: let
+  system = pkgs.system;
+  mkHomeManager = inputs.user-nvim.lib.mkHomeManager;
+  in
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -56,6 +60,7 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
+  programs.neovim = mkHomeManager {inherit system;};
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
