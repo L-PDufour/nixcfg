@@ -8,25 +8,24 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.nixvim.nixosModules.nixvim
-    # ./../../modules/desktop.nix
     ./../../modules/packages.nix
+    ./../../modules/stylix.nix
     ./../../modules/shell.nix
   ];
 
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
+    (lib.filterAttrs (_: lib.isType "flake")) inputs
+  );
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -38,18 +37,19 @@
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
-  boot.kernelParams = ["ip=dhcp"];
+  boot.kernelParams = [ "ip=dhcp" ];
   boot.initrd = {
-    availableKernelModules = ["r8169"];
+    availableKernelModules = [ "r8169" ];
     systemd.users.root.shell = "/bin/cryptsetup-askpass";
     network = {
       enable = true;
       ssh = {
         enable = true;
         port = 22;
-        authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFzb3+ZpJNa3DdYu2ubeMUifNIoO40WQ/Y2Niw0/UeP desktop@nixos"];
-        hostKeys = ["/etc/secrets/initrd/ssh_host_rsa_key"];
-        authorizedKeysFiles = ["/etc/secrets/initrd/authorized_keys"];
+        authorizedKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMFzb3+ZpJNa3DdYu2ubeMUifNIoO40WQ/Y2Niw0/UeP desktop@nixos"
+        ];
+        hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
       };
     };
   };
@@ -105,7 +105,11 @@
   users.users.server = {
     isNormalUser = true;
     description = "server";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
   };
 
   # Allow unfree packages
@@ -150,7 +154,9 @@
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     backupFileExtension = "backup"; # Add this line to handle existing files
     users = {
       # Import your home-manager configuration
@@ -158,7 +164,14 @@
     };
   };
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [8080 8443 5555 5432 7331 8001];
+  networking.firewall.allowedTCPPorts = [
+    8080
+    8443
+    5555
+    5432
+    7331
+    8001
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

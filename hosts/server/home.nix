@@ -2,10 +2,7 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
   # You can import other home-manager modules here
-  imports = [
-    ./../../home-manager/tui.nix
-    ./../../home-manager/nixvim
-  ];
+  imports = [ ./../../home-manager/tui.nix ];
 
   nixpkgs = {
     # You can add overlays here

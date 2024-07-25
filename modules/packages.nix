@@ -4,7 +4,6 @@
   environment.systemPackages = with pkgs; [
     alejandra
     gnumake
-    lazygit
     ripgrep
     fd
     git

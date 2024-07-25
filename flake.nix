@@ -34,8 +34,10 @@
             inherit inputs outputs;
           };
           modules = [
+            lix-module.nixosModules.default
             home-manager.nixosModules.home-manager
             ./hosts/laptop/configuration.nix
+            stylix.nixosModules.stylix
           ];
         };
         desktop = nixpkgs.lib.nixosSystem {
@@ -54,7 +56,9 @@
             inherit inputs outputs;
           };
           modules = [
+            lix-module.nixosModules.default
             home-manager.nixosModules.home-manager
+            stylix.nixosModules.stylix
             ./hosts/server/configuration.nix
           ];
         };

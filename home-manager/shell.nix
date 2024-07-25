@@ -14,6 +14,7 @@ in
     zsh-fzf-history-search
     zsh-fzf-tab
   ];
+  programs.lazygit.enable = true;
   programs.neovim = mkHomeManager { inherit system; };
   programs.vscode = {
     enable = true;
@@ -34,7 +35,7 @@ in
   programs.zsh = {
     enable = true;
     initExtraBeforeCompInit = "
-export FUNCNEST=100
+export FUNCNEST=200
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.config/emacs/bin
 bindkey '^l' forward-word

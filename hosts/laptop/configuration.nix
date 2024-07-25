@@ -7,24 +7,23 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
-    inputs.nixvim.nixosModules.nixvim
     ./../../modules/desktop.nix
     ./hardware-configuration.nix
     ./../../modules/packages.nix
     ./../../modules/shell.nix
   ];
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
+    (lib.filterAttrs (_: lib.isType "flake")) inputs
+  );
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -44,8 +43,12 @@
   users.users.laptop = {
     isNormalUser = true;
     description = "laptop";
-    extraGroups = ["networkmanager" "wheel" "video"];
-    openssh.authorizedKeys.keys = [""];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+    ];
+    openssh.authorizedKeys.keys = [ "" ];
   };
 
   # Allow unfree packages
@@ -64,7 +67,9 @@
   services.openssh.enable = true;
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     backupFileExtension = "backup"; # Add this line to handle existing files
     users = {
       # Import your home-manager configuration

@@ -12,6 +12,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./../../modules/stylix.nix
     ./../../modules/desktop.nix
     ./../../modules/packages.nix
     ./../../modules/shell.nix
@@ -60,41 +61,6 @@
   };
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-  };
-
-  stylix.enable = true;
-  stylix.autoEnable = true;
-  stylix.homeManagerIntegration.autoImport = true;
-  stylix.homeManagerIntegration.followSystem = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  stylix.image = ./Rainnight.jpg;
-  stylix.polarity = "dark";
-  stylix.fonts = {
-    serif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Serif";
-    };
-
-    sansSerif = {
-      package = pkgs.dejavu_fonts;
-      name = "DejaVu Sans";
-    };
-
-    monospace = {
-      package = pkgs.fira-code-nerdfont;
-      name = "FiraCode Nerd Font Mono";
-    };
-
-    emoji = {
-      package = pkgs.noto-fonts-emoji;
-      name = "Noto Color Emoji";
-    };
-  };
-  stylix.fonts.sizes = {
-    applications = 16;
-    terminal = 16;
-    desktop = 16;
-    popups = 16;
   };
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
