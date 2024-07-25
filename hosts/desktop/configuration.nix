@@ -41,8 +41,6 @@
       enable = true;
       xkb.layout = "eu";
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
-      # windowManager.dwm.enable = true;
-      # windowManager.dwm.package = inputs.dwm.packages."x86_64-linux".default;
       displayManager.lightdm.enable = true;
       desktopManager.xterm.enable = false;
       windowManager.i3 = {
@@ -66,7 +64,6 @@
 
   stylix.enable = true;
   stylix.autoEnable = true;
-  # stylix.targets.nixvim.enable = false;
   stylix.homeManagerIntegration.autoImport = true;
   stylix.homeManagerIntegration.followSystem = true;
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
@@ -85,7 +82,7 @@
 
     monospace = {
       package = pkgs.fira-code-nerdfont;
-      name = "FiraCode Nerd Font Mono Bold";
+      name = "FiraCode Nerd Font Mono";
     };
 
     emoji = {

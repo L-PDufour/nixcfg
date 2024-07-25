@@ -20,7 +20,6 @@ in
     package = pkgs.vscode.fhs;
   };
   programs.starship.enable = true;
-  programs.starship.settings = { };
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
   programs.direnv = {
@@ -82,5 +81,4 @@ unsetopt beep
       }
     ];
   };
-  xdg.configFile."starship.toml".source = ./starship.toml;
 }
