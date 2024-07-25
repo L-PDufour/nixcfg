@@ -4,25 +4,17 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
-}: let
-  system = pkgs.system;
-  mkHomeManager = inputs.user-nvim.lib.mkHomeManager;
-  in
+}:
 {
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-    # You can also split up your configuration and import pieces of it here:
     ./../../home-manager/gui.nix
     ./../../home-manager/tui.nix
-    ./../../home-manager/nixvim
-    # ./../../home-manager/sway.nix
-    # ./../../home-manager/neovim
     ./../../home-manager/emacs.nix
-    # ./../../home-manager/neovim.nix
-    # ./../../nvim/default.nix
   ];
 
   nixpkgs = {
@@ -53,14 +45,7 @@
   };
   programs.gpg.enable = true;
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-  # programs.qutebrowser.enable = true;
-
-  # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.neovim = mkHomeManager {inherit system;};
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
@@ -69,27 +54,12 @@
   home.stateVersion = "23.05";
 
   #---------------------------------------------------------------------
-  # home
-  #---------------------------------------------------------------------
-
-  #---------------------------------------------------------------------
   # programs
   #---------------------------------------------------------------------
 
   programs.autorandr = {
     enable = true;
   };
-
-  # programs.i3status = {
-  #   enable = true;
-  #
-  #   modules = {
-  #     ipv6.enable = false;
-  #     "wireless _first_".enable = false;
-  #     "battery all".enable = false;
-  #   };
-  # };
-  #
 
   services.polybar = {
     enable = true;

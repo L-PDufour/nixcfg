@@ -1,19 +1,26 @@
 {
   pkgs,
   config,
+  inputs,
   ...
-}: {
+}:
+let
+  system = pkgs.system;
+  mkHomeManager = inputs.user-nvim.lib.mkHomeManager;
+in
+{
   home.packages = with pkgs; [
     fzf
     zsh-fzf-history-search
     zsh-fzf-tab
   ];
+  programs.neovim = mkHomeManager { inherit system; };
   programs.vscode = {
     enable = true;
     package = pkgs.vscode.fhs;
   };
   programs.starship.enable = true;
-  programs.starship.settings = {};
+  programs.starship.settings = { };
   programs.zoxide.enable = true;
   programs.zoxide.enableZshIntegration = true;
   programs.direnv = {

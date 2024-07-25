@@ -8,27 +8,23 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # inputs.catppuccin.nixosModules.catppuccin
-    # inputs.catppuccin.homeManagerModules.catppuccin
-    inputs.nixvim.nixosModules.nixvim
     ./../../modules/desktop.nix
     ./../../modules/packages.nix
     ./../../modules/shell.nix
     inputs.home-manager.nixosModules.home-manager
   ];
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
+  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
+    (lib.filterAttrs (_: lib.isType "flake")) inputs
+  );
+  nix.nixPath = [ "/etc/nix/path" ];
+  environment.etc = lib.mapAttrs' (name: value: {
+    name = "nix/path/${name}";
+    value.source = value.flake;
+  }) config.nix.registry;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -103,8 +99,6 @@
     desktop = 16;
     popups = 16;
   };
-  # stylix.cursor.package = pkgs.catppuccin-cursors;
-  # stylix.cursor.name = "mochaMauve";
 
   boot.initrd.luks.devices."luks-8c8aff92-306c-42fe-8b4a-74f97f7b5edb".device = "/dev/disk/by-uuid/8c8aff92-306c-42fe-8b4a-74f97f7b5edb";
   networking.hostName = "nixos"; # Define your hostname.
@@ -123,11 +117,15 @@
   users.users.desktop = {
     isNormalUser = true;
     description = "desktop";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
   };
   services.postgresql = {
     enable = true;
-    ensureDatabases = ["mydatabase"];
+    ensureDatabases = [ "mydatabase" ];
     authentication = pkgs.lib.mkOverride 10 ''
             #type database  DBuser  auth-method
             local all       all     trust
@@ -138,14 +136,6 @@
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # List services that you want to enable:
   #DOCKER
@@ -159,7 +149,9 @@
   programs.zsh.enable = true;
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs outputs;};
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
     backupFileExtension = "backup"; # Add this line to handle existing files
     users = {
       "desktop" = import ./home.nix;
