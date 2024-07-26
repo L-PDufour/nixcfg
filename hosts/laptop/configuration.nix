@@ -12,9 +12,11 @@
   imports = [
     # Include the results of the hardware scan.
     ./../../modules/desktop.nix
+    ./../../modules/stylix.nix
     ./hardware-configuration.nix
     ./../../modules/packages.nix
     ./../../modules/shell.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
   nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) (
     (lib.filterAttrs (_: lib.isType "flake")) inputs

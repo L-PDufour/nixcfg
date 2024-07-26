@@ -16,6 +16,7 @@
     ./../../modules/packages.nix
     ./../../modules/stylix.nix
     ./../../modules/shell.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   nix.registry = (lib.mapAttrs (_: flake: { inherit flake; })) (

@@ -13,7 +13,7 @@
   imports = [
     ./hardware-configuration.nix
     ./../../modules/stylix.nix
-    ./../../modules/desktop.nix
+    # ./../../modules/desktop.nix
     ./../../modules/packages.nix
     ./../../modules/shell.nix
     inputs.home-manager.nixosModules.home-manager
