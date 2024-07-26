@@ -21,5 +21,10 @@
     rofi-screenshot
     xclip
     flameshot
+    #Wayland
+    swaylock
+    light
+    swayidle
+    wl-clipboard
   ];
 }

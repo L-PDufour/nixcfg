@@ -30,27 +30,36 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  security.polkit.enable = true;
   programs.steam.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    libusb1
-    xorg.libXext
-  ];
   services = {
-    picom.enable = true;
+    displayManager.sessionPackages = [ pkgs.sway ];
+    displayManager.sddm.enable = true;
+    displayManager.sddm.wayland.enable = true;
     xserver = {
       enable = true;
       xkb.layout = "eu";
       xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
-      displayManager.lightdm.enable = true;
       desktopManager.xterm.enable = false;
-      windowManager.i3 = {
-        enable = true;
-      };
     };
   };
 
-  services.libinput.enable = true;
+  time.timeZone = "America/Toronto";
+  i18n.defaultLocale = "en_CA.UTF-8";
+  fonts.packages = with pkgs; [
+    fira-code-nerdfont
+    dejavu_fonts
+    noto-fonts-emoji
+  ];
+  services.printing.enable = true;
+  security.pam.services.swaylock = { };
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
   programs = {
     mtr.enable = true;
     dconf.enable = true;
@@ -84,6 +93,7 @@
       "networkmanager"
       "wheel"
       "docker"
+      "audio"
     ];
   };
   services.postgresql = {

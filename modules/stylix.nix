@@ -4,8 +4,8 @@
   stylix.autoEnable = true;
   stylix.homeManagerIntegration.autoImport = true;
   stylix.homeManagerIntegration.followSystem = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  stylix.image = ../Rainnight.jpg;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
+  stylix.image = ../cozy.jpg;
   stylix.polarity = "dark";
   stylix.fonts = {
     serif = {
