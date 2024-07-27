@@ -33,17 +33,39 @@
   security.polkit.enable = true;
   programs.steam.enable = true;
 
-  services = {
-    displayManager.sessionPackages = [ pkgs.sway ];
-    displayManager.sddm.enable = true;
-    displayManager.sddm.wayland.enable = true;
-    xserver = {
-      enable = true;
-      xkb.layout = "eu";
-      xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
-      desktopManager.xterm.enable = false;
+  # services = {
+  #   displayManager.sessionPackages = [ pkgs.sway ];
+  #   displayManager.sddm.enable = true;
+  #   displayManager.sddm.wayland.enable = true;
+  #   xserver = {
+  #     enable = true;
+  #     xkb.layout = "eu";
+  #     xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps,ctrl:swapcaps";
+  #     desktopManager.xterm.enable = false;
+  #   };
+  # };
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway";
+        user = "desktop";
+      };
+      default_session = {
+        command = "${pkgs.greetd.gtkgreet}/bin/gtkgreet --cmd ${pkgs.sway}/bin/sway";
+        user = "greeter";
+      };
     };
   };
+
+  # Ensure the greeter user exists
+  users.users.greeter = {
+    group = "greeter";
+    isSystemUser = true;
+  };
+
+  # Create the greeter group
+  users.groups.greeter = { };
 
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
@@ -119,6 +141,7 @@
   };
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  security.sudo.wheelNeedsPassword = false;
   programs.zsh.enable = true;
 
   home-manager = {

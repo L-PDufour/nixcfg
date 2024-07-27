@@ -12,15 +12,13 @@
       package = pkgs.dejavu_fonts;
       name = "DejaVu Serif";
     };
-
     sansSerif = {
       package = pkgs.dejavu_fonts;
       name = "DejaVu Sans";
     };
-
     monospace = {
-      package = pkgs.fira-code-nerdfont;
-      name = "FiraCode Nerd Font Mono";
+      package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
+      name = "FiraCode Nerd Font";
     };
 
     emoji = {
@@ -29,10 +27,15 @@
     };
   };
   stylix.fonts.sizes = {
-    applications = 16;
+    #   applications = 16;
     terminal = 16;
-    desktop = 16;
-    popups = 16;
+    #   desktop = 16;
+    popups = 15;
   };
-
+  stylix.opacity = {
+    # applications = 0.8;
+    terminal = 0.9;
+    # desktop = 0.8;
+    popups = 0.5;
+  };
 }

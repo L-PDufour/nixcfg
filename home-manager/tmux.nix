@@ -6,8 +6,11 @@
     baseIndex = 1;
     keyMode = "vi";
     mouse = true;
+    terminal = "screen-256color";
     newSession = true;
+    customPaneNavigationAndResize = true;
     prefix = "C-Space";
+    sensibleOnTop = true;
     plugins = with pkgs; [
       tmuxPlugins.sensible
       # must be before continuum edits right status bar
@@ -27,25 +30,22 @@
           set -g @continuum-save-interval '10'
         '';
       }
-      {
-        plugin = tmuxPlugins.tmux-fzf;
-        extraConfig = ''
-          set -g @tmux-fzf 'm'
-        '';
-      }
-      {
-        plugin = tmuxPlugins.session-wizard;
-        extraConfig = ''
-          set -g @session-wizard 'f'
-        '';
-      }
+      tmuxPlugins.tmux-fzf
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.yank
     ];
+    extraConfig = ''
+      set -g set-clipboard on      # use system clipboard
+      set-option -sa terminal-features ',xterm-256color:RGB'
+      set -g allow-passthrough on
+      bind r source ~/.zshrc && source-file ~/.config/tmux.conf \; display-message "Config reloaded..."
+      bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt
+      set -g detach-on-destroy off  # don't exit from tmux when closing a session
+      bind-key "f" display-popup -E -w 40% "${pkgs.sesh}/bin/sesh connect \"$(
+        ${pkgs.sesh}/bin/sesh list -i | ${pkgs.gum}/bin/gum filter --limit 1 --placeholder 'Pick a sesh' --prompt='⚡'
+      )\""
+    '';
   };
-  extraConfig = ''
-    set -g status-bg ${config.lib.stylix.colors.base00}
-  '';
 }
 # extraConfig = ''
 #   set-option -g focus-events on # TODO: learn how this works

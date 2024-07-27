@@ -31,6 +31,7 @@ in
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    tmux.enableShellIntegration = true;
   };
   programs.zsh = {
     enable = true;

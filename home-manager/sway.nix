@@ -1,5 +1,5 @@
 # https://github.com/KubqoA/dotfiles/blob/new/users/jakub/default.nix
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   light = "${pkgs.light}/bin/light";
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
@@ -19,9 +19,12 @@ in
   # Notification daemon
   services.mako.enable = true;
   services.wob.enable = true;
-  services.wlsunset.enable = true;
-  services.wlsunset.latitude = 46.9;
-  services.wlsunset.longitude = -71.2;
+  services.wlsunset = {
+    enable = true;
+    latitude = 46.9;
+    longitude = -71.2;
+    temperature.night = 4500;
+  };
 
   programs.waybar = {
     enable = true;
@@ -30,21 +33,91 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 26;
+        tray = {
+          spacing = 10;
+        };
         modules-left = [
           "sway/workspaces"
           "sway/mode"
         ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "clock" ];
-        "sway/window" = {
-          "max-length" = 50;
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "clock"
+          "tray"
+        ];
+        battery = {
+          format = "{capacity}% {icon}";
+          format-alt = "{time} {icon}";
+          format-charging = "{capacity}% ";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+          format-plugged = "{capacity}% ";
+          states = {
+            critical = 15;
+            warning = 30;
+          };
         };
         clock = {
-          "format-alt" = "{:%a, %d. %b  %H:%M}";
+          format-alt = "{:%Y-%m-%d}";
+          tooltip-format = "{:%Y-%m-%d | %H:%M}";
+        };
+        cpu = {
+          format = "{usage}% ";
+          tooltip = false;
+        };
+        memory = {
+          format = "{}% ";
+        };
+        network = {
+          interval = 1;
+          format-alt = "{ifname}: {ipaddr}/{cidr}";
+          format-disconnected = "Disconnected ⚠";
+          format-ethernet = "up: {bandwidthUpBits} down: {bandwidthDownBits}";
+          format-linked = "{ifname} (No IP) ";
+          format-wifi = "({signalStrength}%) ";
+        };
+        pulseaudio = {
+          format = "{volume}% {icon} {format_source}";
+          format-bluetooth = "{volume}% {icon} {format_source}";
+          format-bluetooth-muted = " {icon} {format_source}";
+          format-icons = {
+            default = [
+              ""
+              ""
+              ""
+            ];
+          };
+          format-muted = " {format_source}";
+          format-source = "{volume}% ";
+          format-source-muted = "";
+        };
+        temperature = {
+          critical-threshold = 80;
+          format = "{temperatureC}°C {icon}";
+          format-icons = [
+            ""
+            ""
+            ""
+          ];
         };
       };
     };
+    style = ''
+      * {
+      font-family: "Fira Code Nerd Font Mono";
+      font-weight: bold;
+      }
+    '';
   };
   programs.wlogout.enable = true;
   wayland.windowManager.sway = {
@@ -64,7 +137,7 @@ in
       focus.followMouse = "always";
       window = {
         titlebar = false;
-        border = 1;
+        border = 4;
       };
       input."*" = {
         xkb_layout = "eu";
@@ -96,7 +169,15 @@ in
           command = "exec ${idlecmd}";
           always = true;
         }
+        { command = "sleep 5 && ${pkgs.discord}/bin/discord"; }
+        { command = "sleep 5 && exec ${terminal}"; }
+        { command = "sleep 5 && exec chromium"; }
       ];
+      assigns = {
+        "1" = [ { app_id = "chromium"; } ];
+        "2" = [ { app_id = "wezterm"; } ];
+        "9" = [ { app_id = "discord"; } ];
+      };
       modifier = "Mod1";
       gaps = {
         inner = 5;
