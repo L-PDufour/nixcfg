@@ -20,7 +20,6 @@
     qmk
     rofi-screenshot
     xclip
-    flameshot
     #Wayland
     swaylock
     light
