@@ -32,7 +32,13 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
-
+  boot.plymouth.enable = true;
+  services.thermald.enable = true;
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "performance";
+  services.fstrim.enable = true;
+  security.rtkit.enable = true;
+  security.polkit.enable = true;
   boot.initrd.luks.devices."luks-bf8c52ac-5d36-45b3-b5fb-f6a6211efbdd".device = "/dev/disk/by-uuid/bf8c52ac-5d36-45b3-b5fb-f6a6211efbdd";
   # Setup keyfile
   boot.initrd.secrets = {
@@ -54,7 +60,19 @@
       };
     };
   };
+  console = {
+    font = "Lat2-Terminus16";
+    useXkbConfig = true; # This enables the use of X11 keyboard settings in the console
+  };
 
+  services.xserver = {
+    xkb = {
+      layout = "eu";
+      variant = "eurkey";
+      options = "ctrl:swapcaps";
+    };
+  };
+  programs.zsh.enable = true;
   boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices."luks-548eacfe-ef8c-440c-8823-f905920a116a".keyFile = "/crypto_keyfile.bin";
@@ -64,7 +82,11 @@
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
   };
-
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
   #Laptop settings
   services.logind.lidSwitchExternalPower = "ignore";
 
@@ -96,11 +118,6 @@
     fira-code
     fira-code-symbols
   ];
-
-  services.xserver = {
-    xkb.layout = "eu";
-    xkb.options = "ctrl:swapcaps";
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.server = {
@@ -135,6 +152,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.X11Forwarding = true;
   services.openssh.settings.PasswordAuthentication = true;
 
   #cloudflared
