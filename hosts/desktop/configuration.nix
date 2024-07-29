@@ -141,6 +141,7 @@
   };
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.openssh.settings.X11Forwarding = true;
   security.sudo.wheelNeedsPassword = false;
   programs.zsh.enable = true;
 
