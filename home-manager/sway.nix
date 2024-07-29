@@ -16,13 +16,13 @@ let
   });
   light = "${pkgs.light}/bin/light";
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
-  swaylockcmd = "${pkgs.swaylock}/bin/swaylock -i \"$HOME/nixos/cozy.jpg\"";
+  swaylockcmd = "${pkgs.swaylock}/bin/swaylock -i ${builtins.getEnv "HOME"}/nixos/cozy.jpg";
   idlecmd = pkgs.writeShellScript "swayidle.sh" ''
     ${pkgs.swayidle}/bin/swayidle \
     before-sleep "${swaylockcmd}" \
     lock "${swaylockcmd}" \
-    timeout 500 "${swaylockcmd}" \
-    timeout 1000 "${pkgs.systemd}/bin/systemctl suspend"
+    timeout 1000 "${swaylockcmd}" \
+    timeout 2000 "${pkgs.systemd}/bin/systemctl suspend"
   '';
 in
 {
@@ -150,7 +150,7 @@ in
     xwayland = true;
     config = rec {
       terminal = "wezterm";
-      bars = [ { } ];
+      bars = [ ];
       focus.followMouse = "always";
       window = {
         titlebar = false;
@@ -193,7 +193,7 @@ in
       assigns = {
         "1" = [ { app_id = "chromium"; } ];
         "2" = [ { app_id = "wezterm"; } ];
-        "9" = [ { app_id = "discord"; } ];
+        "9" = [ { app_id = "Discord"; } ];
       };
       modifier = "Mod1";
       gaps = {

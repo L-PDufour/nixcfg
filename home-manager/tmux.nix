@@ -6,7 +6,7 @@
     baseIndex = 1;
     keyMode = "vi";
     mouse = true;
-    terminal = "screen-256color";
+    terminal = "xterm-256color";
     newSession = true;
     customPaneNavigationAndResize = true;
     prefix = "C-Space";
@@ -36,7 +36,8 @@
     ];
     extraConfig = ''
       set -g set-clipboard on      # use system clipboard
-      set-option -sa terminal-features ',xterm-256color:RGB'
+      set-option -ga terminal-overrides ",xterm-256color:Tc"
+      # set -sg terminal-overrides ",*:RGB"
       set -g allow-passthrough on
       bind r source ~/.zshrc && source-file ~/.config/tmux.conf \; display-message "Config reloaded..."
       bind-key x kill-pane # skip "kill-pane 1? (y/n)" prompt

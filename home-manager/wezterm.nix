@@ -20,4 +20,5 @@
     return config
   '';
   programs.wezterm.enableZshIntegration = true;
+  programs.wezterm.enableBashIntegration = true;
 }
